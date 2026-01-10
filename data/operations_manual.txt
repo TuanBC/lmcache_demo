@@ -1,0 +1,552 @@
+# =============================================================================
+# Internal Operations & Compliance Manual
+# ABC Bank - Version 2.3.1
+# Last Updated: January 2026
+# =============================================================================
+# 
+# CONFIDENTIAL - FOR INTERNAL USE ONLY
+# This document contains proprietary policies and procedures.
+# =============================================================================
+
+## Section 1: Introduction and Purpose
+
+### 1.1 Document Overview
+
+This Internal Operations & Compliance Manual serves as the definitive guide for all 
+ABC Bank employees regarding operational procedures, regulatory compliance, and 
+internal policies. All staff members are required to familiarize themselves with 
+the contents of this manual and adhere to the guidelines set forth herein.
+
+### 1.2 Regulatory Framework
+
+ABC Bank operates under the following regulatory frameworks:
+- Federal Reserve Regulation E (Electronic Fund Transfers)
+- Bank Secrecy Act (BSA) / Anti-Money Laundering (AML)
+- Gramm-Leach-Bliley Act (GLBA) for customer privacy
+- Payment Card Industry Data Security Standard (PCI DSS)
+- Office of Foreign Assets Control (OFAC) sanctions
+
+### 1.3 Document Updates
+
+This manual is reviewed quarterly and updated as needed. All employees will be 
+notified of significant changes via the internal communication system.
+
+---
+
+## Section 2: Account Operations
+
+### 2.1 Account Opening Procedures
+
+#### 2.1.1 Individual Accounts
+
+Required documentation for individual account opening:
+1. Government-issued photo ID (passport, driver's license, state ID)
+2. Social Security Number verification
+3. Proof of address (utility bill, bank statement dated within 90 days)
+4. Initial deposit (minimum $25 for savings, $100 for checking)
+
+Customer Identification Program (CIP) requirements:
+- Full legal name
+- Date of birth
+- Residential address (P.O. boxes not accepted as primary)
+- Identification number (SSN for U.S. citizens, passport number for non-citizens)
+
+#### 2.1.2 Business Accounts
+
+Required documentation for business account opening:
+1. Articles of Incorporation or Organization
+2. Certificate of Good Standing (for out-of-state entities)
+3. Business license (if applicable)
+4. EIN confirmation letter from IRS
+5. Resolution authorizing account opening
+6. Identification for all authorized signers
+
+Beneficial ownership requirements (per FinCEN):
+- Identify all individuals owning 25% or more of the entity
+- Identify one individual with significant management responsibility
+
+### 2.2 Account Maintenance
+
+#### 2.2.1 Address Changes
+
+Address changes may be processed through:
+- In-branch with valid photo ID
+- Online banking with security verification
+- Phone banking with full account authentication
+
+Processing timeline: Same business day if received before 3:00 PM local time.
+
+#### 2.2.2 Account Closure
+
+Standard account closure procedure:
+1. Verify account holder identity
+2. Check for pending transactions
+3. Clear any outstanding fees
+4. Obtain signed closure form
+5. Issue remaining balance via check or transfer
+6. Retain records per retention policy (7 years minimum)
+
+---
+
+## Section 3: Transaction Processing
+
+### 3.1 Transaction Limits
+
+#### 3.1.1 Daily Limits
+
+| Transaction Type | Consumer Account | Business Account |
+|------------------|------------------|------------------|
+| ATM Withdrawal | $500 | $1,000 |
+| Point of Sale | $2,500 | $5,000 |
+| Online Transfer | $5,000 | $25,000 |
+| Wire Transfer | $10,000 | $100,000 |
+
+#### 3.1.2 Limit Increases
+
+Temporary limit increases may be granted for:
+- Pre-approved customers (credit score 720+)
+- Accounts in good standing (12+ months, no overdrafts)
+- Documented need (travel, large purchase)
+
+Maximum temporary increase: 200% of standard limit for up to 30 days.
+
+### 3.2 Wire Transfers
+
+#### 3.2.1 Outgoing Wires
+
+Processing requirements:
+1. Verify customer identity (in-person or authenticated digital channel)
+2. Collect all required beneficiary information
+3. Screen against OFAC sanctions list
+4. Obtain customer signature or digital authorization
+5. Submit to wire room before 4:00 PM for same-day processing
+
+Required information:
+- Beneficiary name and address
+- Beneficiary bank name, ABA routing number, and address
+- Beneficiary account number
+- Purpose of payment
+- Amount in USD (or specify currency)
+
+Fees: $30 domestic, $50 international
+
+#### 3.2.2 Incoming Wires
+
+Processing timeline:
+- Domestic wires: Same business day
+- International wires: 1-3 business days depending on correspondent bank
+
+### 3.3 Check Processing
+
+#### 3.3.1 Check Holds
+
+Standard hold periods:
+| Check Type | Amount | Hold Period |
+|------------|--------|-------------|
+| Local checks | $0-$225 | Next business day |
+| Local checks | $226-$5,525 | 2 business days |
+| Local checks | $5,526+ | 7 business days |
+| Non-local checks | Any | Up to 7 business days |
+
+Exceptions allowing extended holds:
+- New accounts (under 30 days)
+- Repeated overdrafts (6 or more in 6 months)
+- Previously returned checks
+- Emergency conditions
+
+#### 3.3.2 Mobile Deposit
+
+Mobile deposit limits:
+- Standard accounts: $3,000/day, $10,000/month
+- Premium accounts: $10,000/day, $50,000/month
+
+Requirements for mobile deposit:
+- Account must be open for 30+ days
+- Customer must accept mobile deposit terms
+- Check must be endorsed "For Mobile Deposit Only at ABC Bank"
+
+---
+
+## Section 4: Compliance Requirements
+
+### 4.1 Anti-Money Laundering (AML)
+
+#### 4.1.1 Suspicious Activity Monitoring
+
+Red flags requiring enhanced review:
+- Transactions inconsistent with customer profile
+- Rapid movement of funds with no apparent business purpose
+- Unusual geographic patterns
+- Structuring (multiple transactions designed to avoid reporting thresholds)
+- Customer reluctance to provide information
+
+#### 4.1.2 Currency Transaction Reports (CTR)
+
+Filing requirements:
+- Any cash transaction over $10,000 (single or aggregate)
+- File within 15 calendar days
+- Include all required customer and transaction information
+
+#### 4.1.3 Suspicious Activity Reports (SAR)
+
+Filing requirements:
+- Suspected criminal activity involving $5,000 or more
+- Suspected insider abuse involving $25,000 or more
+- File within 30 calendar days of detection
+- NO NOTIFICATION to customer of SAR filing
+
+### 4.2 Know Your Customer (KYC)
+
+#### 4.2.1 Enhanced Due Diligence (EDD)
+
+EDD required for:
+- Politically Exposed Persons (PEPs)
+- High-risk geographic locations
+- Cash-intensive businesses
+- Private banking accounts over $1 million
+- Correspondent accounts
+
+EDD procedures:
+1. Senior management approval required
+2. Source of funds documentation
+3. Enhanced transaction monitoring
+4. Periodic reviews (minimum annually)
+
+### 4.3 OFAC Compliance
+
+#### 4.3.1 Sanctions Screening
+
+Required screening points:
+- Account opening
+- Wire transfer initiation
+- ACH origination
+- Loan application
+- Any customer-initiated international transaction
+
+Potential match procedure:
+1. Halt transaction immediately
+2. Escalate to BSA/AML Officer
+3. Document all findings
+4. Block if confirmed match
+5. File blocking report within 10 days
+
+---
+
+## Section 5: Customer Privacy
+
+### 5.1 Privacy Notice Requirements
+
+#### 5.1.1 Initial Notice
+
+Provide initial privacy notice at account opening containing:
+- Categories of information collected
+- Categories of information disclosed
+- Affiliates and third parties receiving information
+- Security practices overview
+- Opt-out instructions
+
+#### 5.1.2 Annual Notice
+
+Provide annual privacy notice to all active account holders by:
+- December 31 each year, OR
+- Within 12 months of initial notice
+
+Delivery methods:
+- Paper mail
+- Electronic delivery (with customer consent)
+- Included with periodic statement
+
+### 5.2 Opt-Out Requirements
+
+#### 5.2.1 Opt-Out Rights
+
+Customers have the right to opt out of:
+- Sharing with non-affiliated third parties
+- Sharing for marketing purposes
+
+Customers CANNOT opt out of:
+- Sharing required by law
+- Sharing to process transactions
+- Sharing with service providers under contract
+
+#### 5.2.2 Processing Opt-Out Requests
+
+Opt-out requests must be processed within:
+- 30 days of receipt
+- Apply to all sharing immediately upon processing
+
+Document all opt-out requests and maintain records for 5 years.
+
+---
+
+## Section 6: Information Security
+
+### 6.1 Data Classification
+
+#### 6.1.1 Classification Levels
+
+| Classification | Description | Examples |
+|----------------|-------------|----------|
+| Public | Generally available | Marketing materials, branch addresses |
+| Internal | For employees only | Policy documents, internal announcements |
+| Confidential | Sensitive business info | Financial reports, strategic plans |
+| Restricted | Highest sensitivity | Customer SSN, account numbers, passwords |
+
+#### 6.1.2 Handling Requirements
+
+Restricted data requirements:
+- Encryption in transit (TLS 1.2+)
+- Encryption at rest (AES-256)
+- Access logging and monitoring
+- Minimum necessary access principle
+- Secure disposal (NIST 800-88 compliant)
+
+### 6.2 Access Control
+
+#### 6.2.1 User Access Management
+
+Access request process:
+1. Manager submits access request form
+2. IT Security reviews against role requirements
+3. Approval by system owner
+4. Access provisioned within 3 business days
+5. Confirmation sent to user and manager
+
+Access review requirements:
+- Monthly: Privileged access
+- Quarterly: High-risk systems
+- Annually: All system access
+
+#### 6.2.2 Password Requirements
+
+Password policy:
+- Minimum 12 characters
+- Must include: uppercase, lowercase, number, special character
+- Cannot reuse last 12 passwords
+- Maximum age: 90 days
+- Lockout after 5 failed attempts
+
+### 6.3 Incident Response
+
+#### 6.3.1 Security Incident Classification
+
+| Severity | Description | Response Time |
+|----------|-------------|---------------|
+| Critical | Data breach, system compromise | Immediate, 24/7 |
+| High | Attempted breach, malware | Within 1 hour |
+| Medium | Policy violation, suspicious activity | Within 4 hours |
+| Low | Minor issues, informational | Within 24 hours |
+
+#### 6.3.2 Reporting Procedures
+
+All security incidents must be reported to:
+- IT Security Hotline: x7777
+- Email: security@abcbank.internal
+- In person: Any IT Security team member
+
+Required information:
+- Date and time of discovery
+- Systems or data affected
+- Description of incident
+- Any actions already taken
+
+---
+
+## Section 7: Customer Service Standards
+
+### 7.1 Response Time Requirements
+
+#### 7.1.1 Communication Channels
+
+| Channel | Initial Response | Resolution |
+|---------|------------------|------------|
+| Phone | Answer within 60 seconds | Same call when possible |
+| Email | Acknowledge within 4 hours | Within 24 hours |
+| Secure Message | Acknowledge within 2 hours | Within 12 hours |
+| In-Person | Immediate greeting | Minimize wait times |
+
+#### 7.1.2 Escalation Paths
+
+Escalation criteria:
+- Customer request for supervisor
+- Unresolved after 15 minutes
+- Complaint about employee
+- Legal threat
+- Regulatory inquiry
+
+Escalation timeline:
+- Level 1 to Level 2: Within 5 minutes
+- Level 2 to Manager: Within 15 minutes
+- Manager to Executive: Same business day
+
+### 7.2 Complaint Handling
+
+#### 7.2.1 Complaint Documentation
+
+All complaints must include:
+- Customer name and account number
+- Date and time of complaint
+- Nature of complaint
+- Actions taken
+- Resolution outcome
+- Customer satisfaction confirmation
+
+#### 7.2.2 Regulatory Complaints
+
+For complaints received from regulatory agencies:
+1. Acknowledge receipt within 24 hours
+2. Assign dedicated investigator
+3. Complete investigation within 15 days
+4. Provide detailed written response
+5. Implement corrective actions as needed
+6. Track for trend analysis
+
+---
+
+## Section 8: Technical Specifications
+
+### 8.1 System Architecture
+
+#### 8.1.1 Core Banking System
+
+System: ABC Core Banking Platform v12.4
+- High availability: 99.99% uptime SLA
+- Maximum concurrent users: 10,000
+- Database: Oracle 19c Enterprise
+- Application servers: Load-balanced cluster
+
+#### 8.1.2 Integration Points
+
+| External System | Protocol | Frequency |
+|-----------------|----------|-----------|
+| Federal Reserve | SFTP | Real-time + EOD batch |
+| Card Networks | ISO 8583 | Real-time |
+| Credit Bureaus | XML/HTTPS | On-demand |
+| SWIFT Network | MT/MX | Real-time |
+
+### 8.2 API Specifications
+
+#### 8.2.1 Rate Limits
+
+| API Endpoint | Rate Limit | Burst Limit |
+|--------------|------------|-------------|
+| Account Inquiry | 100/minute | 150 |
+| Transaction Post | 50/minute | 75 |
+| Customer Lookup | 200/minute | 300 |
+| Batch Upload | 10/hour | 15 |
+
+#### 8.2.2 Error Codes
+
+| Code | Description | Resolution |
+|------|-------------|------------|
+| E001 | Authentication Failed | Verify credentials |
+| E002 | Rate Limit Exceeded | Wait and retry |
+| E003 | Invalid Request Format | Check documentation |
+| E004 | Resource Not Found | Verify endpoint |
+| E005 | Internal Server Error | Contact support |
+
+### 8.3 Disaster Recovery
+
+#### 8.3.1 Recovery Objectives
+
+- Recovery Time Objective (RTO): 4 hours
+- Recovery Point Objective (RPO): 1 hour
+- Maximum Tolerable Downtime: 24 hours
+
+#### 8.3.2 Backup Procedures
+
+| Data Type | Frequency | Retention |
+|-----------|-----------|-----------|
+| Transaction logs | Continuous | 7 years |
+| Database | Hourly incremental | 90 days |
+| Full backup | Daily | 1 year |
+| System images | Weekly | 90 days |
+
+---
+
+## Section 9: Employee Responsibilities
+
+### 9.1 Code of Conduct
+
+#### 9.1.1 General Requirements
+
+All employees must:
+- Act with integrity and honesty
+- Protect customer confidentiality
+- Report suspected violations
+- Complete required training
+- Maintain professional conduct
+
+#### 9.1.2 Prohibited Activities
+
+Employees are prohibited from:
+- Unauthorized disclosure of customer information
+- Personal use of customer data
+- Accepting gifts over $50 from vendors
+- Engaging in personal transactions on work systems
+- Sharing login credentials
+
+### 9.2 Training Requirements
+
+#### 9.2.1 Mandatory Annual Training
+
+| Training Module | Completion Deadline |
+|-----------------|---------------------|
+| BSA/AML Awareness | March 31 |
+| Information Security | June 30 |
+| Code of Conduct | Within 30 days of hire, then annually |
+| Privacy Training | September 30 |
+| Emerging Fraud Trends | December 31 |
+
+#### 9.2.2 Role-Specific Training
+
+Additional training required by role:
+- Tellers: Cash handling, counterfeit detection
+- Loan Officers: Fair lending, TILA/RESPA
+- IT Staff: NIST Cybersecurity Framework
+- Managers: Employment law, harassment prevention
+
+---
+
+## Section 10: Appendices
+
+### Appendix A: Glossary
+
+- **ACH**: Automated Clearing House
+- **AML**: Anti-Money Laundering
+- **BSA**: Bank Secrecy Act
+- **CIP**: Customer Identification Program
+- **CTR**: Currency Transaction Report
+- **EDD**: Enhanced Due Diligence
+- **KYC**: Know Your Customer
+- **OFAC**: Office of Foreign Assets Control
+- **PEP**: Politically Exposed Person
+- **SAR**: Suspicious Activity Report
+
+### Appendix B: Contact Directory
+
+| Department | Phone | Email |
+|------------|-------|-------|
+| BSA/AML Compliance | x5501 | bsa@abcbank.internal |
+| IT Security | x7777 | security@abcbank.internal |
+| Human Resources | x2200 | hr@abcbank.internal |
+| Customer Service | x1000 | custserv@abcbank.internal |
+| Wire Room | x4400 | wires@abcbank.internal |
+
+### Appendix C: Revision History
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 2.3.1 | Jan 2026 | Compliance Team | Updated wire limits |
+| 2.3.0 | Oct 2025 | IT Security | Enhanced security section |
+| 2.2.0 | Jul 2025 | Operations | Mobile deposit updates |
+| 2.1.0 | Apr 2025 | Legal | Privacy notice revisions |
+| 2.0.0 | Jan 2025 | Various | Major revision |
+
+---
+
+## Document End
+
+<<< END OF INTERNAL OPERATIONS & COMPLIANCE MANUAL >>>
+
+For questions about this document, contact the Compliance department at compliance@abcbank.internal.
