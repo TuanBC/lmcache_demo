@@ -2,7 +2,25 @@
 Test configuration and fixtures.
 """
 
+import os
+
 import pytest
+from dotenv import load_dotenv
+
+
+@pytest.fixture(autouse=True, scope="session")
+def set_test_environment():
+    """Load environment variables from .env file for tests.
+    
+    Uses the same dotenv loading pattern as src/config/settings.py
+    to ensure consistency between application and tests.
+    """
+    # Load .env file (same as settings.py does)
+    load_dotenv()
+    
+    # Fallback for VLLM_MODEL if not set in .env (needed for prompty templates)
+    os.environ.setdefault("VLLM_MODEL", "test-model")
+    yield
 
 
 @pytest.fixture

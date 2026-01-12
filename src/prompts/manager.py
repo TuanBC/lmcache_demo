@@ -23,6 +23,14 @@ import prompty
 
 logger = logging.getLogger(__name__)
 
+# =============================================================================
+# LMCache Optimization Constants
+# =============================================================================
+# These values MUST match the LMCache server configuration.
+# Chunk alignment ensures prompts end on cache block boundaries.
+CHUNK_SIZE = 256  # tokens per cache chunk (matches lmcache-config.yaml)
+TURN_BOUNDARY = "\n<<< TURN_BOUNDARY >>>\n"  # Separator for multi-turn caching
+
 
 class DeterministicPromptBuilder:
     """
@@ -47,6 +55,60 @@ class DeterministicPromptBuilder:
             f"[PROMPT] Initialized with manual: "
             f"len={len(self._manual)} chars, hash={self._manual_hash}"
         )
+        
+        # Pre-compute padded manual for chunk alignment
+        self._padded_manual = self._pad_to_chunk_boundary(self._manual)
+        token_est = len(self._padded_manual) // 4
+        logger.info(
+            f"[PROMPT] Manual padded for chunk alignment: "
+            f"{token_est} tokens (aligned to {CHUNK_SIZE})"
+        )
+    
+    def _estimate_tokens(self, text: str) -> int:
+        """Estimate token count from character count.
+        
+        Uses 4 chars ≈ 1 token heuristic (conservative for English).
+        This is compatible with most tokenizers including Qwen.
+        """
+        return len(text) // 4
+    
+    def _pad_to_chunk_boundary(self, text: str) -> str:
+        """Pad text to align with LMCache chunk boundaries.
+        
+        CACHE OPTIMIZATION:
+        -------------------
+        LMCache stores KV cache in chunks of CHUNK_SIZE tokens.
+        If a prefix ends mid-chunk, the partial chunk may not be reused.
+        By padding to chunk boundaries, we ensure full chunk utilization.
+        
+        Returns:
+            Text with padding to reach next chunk boundary.
+        """
+        token_count = self._estimate_tokens(text)
+        remainder = token_count % CHUNK_SIZE
+        
+        if remainder == 0:
+            # Already aligned
+            return text
+        
+        padding_tokens = CHUNK_SIZE - remainder
+        # Each padding token ≈ 4 chars (using spaces with markers)
+        padding_chars = padding_tokens * 4
+        
+        # Use visible marker + whitespace for debugging
+        padding = "\n<<< CHUNK_PADDING >>>" + " " * (padding_chars - 21)
+        
+        return text + padding
+    
+    @property
+    def padded_manual(self) -> str:
+        """Get chunk-aligned manual content for cache optimization."""
+        return self._padded_manual
+    
+    @property
+    def prefix_tokens_est(self) -> int:
+        """Estimated token count of the padded prefix."""
+        return self._estimate_tokens(self._padded_manual)
     
     @staticmethod
     def _normalize(text: str) -> str:
@@ -99,8 +161,9 @@ class DeterministicPromptBuilder:
             return f"Agent: {agent_name}\nQuery: {query}\n\nManual snippet: {self._manual[:100]}..."
 
         # Prepare inputs for hydrate
+        # Use padded manual for chunk alignment
         inputs = {
-            "manual_content": self._manual,
+            "manual_content": self._padded_manual,  # Use padded version!
             "history": self._format_history(history),
             "query": query.strip()
         }
@@ -113,13 +176,21 @@ class DeterministicPromptBuilder:
         return self._normalize(prompt_content)
     
     def _format_history(self, history: list) -> str:
-        """Deterministic history formatting."""
+        """Deterministic history formatting with turn boundaries.
+        
+        CACHE OPTIMIZATION:
+        -------------------
+        Uses TURN_BOUNDARY separator for multi-turn caching.
+        This enables better cache reuse when CacheBlend is enabled server-side.
+        """
         if not history:
             return "(No previous conversation)"
-        return "\n".join(
+        
+        formatted_turns = [
             f"{msg.get('role', 'unknown').upper()}: {msg.get('content', '').strip()}"
             for msg in history
-        )
+        ]
+        return TURN_BOUNDARY.join(formatted_turns)
     
     @property
     def manual_hash(self) -> str:

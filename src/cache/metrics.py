@@ -27,7 +27,10 @@ is likely breaking the cache (e.g., whitespace differences).
 import hashlib
 import logging
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, UTC
+
+# Import chunk size from prompt manager for alignment checks
+from src.prompts.manager import CHUNK_SIZE
 
 logger = logging.getLogger(__name__)
 
@@ -92,10 +95,33 @@ class CacheAwareMetrics:
             "prefix_hash": prefix_hash,
             "prefix_length_chars": len(cacheable_prefix),
             "prefix_length_tokens_est": len(cacheable_prefix) // 4,
+            "is_chunk_aligned": self._check_chunk_alignment(cacheable_prefix),
             "total_prompt_length": len(prompt),
             "cache_aligned": cache_aligned,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
         }
+    
+    def _check_chunk_alignment(self, text: str) -> bool:
+        """Check if text is aligned to CHUNK_SIZE boundaries.
+        
+        CACHE OPTIMIZATION:
+        -------------------
+        LMCache works best when prefixes end on chunk boundaries.
+        This check verifies alignment for debugging cache efficiency.
+        """
+        token_est = len(text) // 4
+        is_aligned = (token_est % CHUNK_SIZE) == 0
+        
+        if not is_aligned:
+            remainder = token_est % CHUNK_SIZE
+            logger.warning(
+                f"[CACHE] Prefix NOT chunk-aligned: {token_est} tokens "
+                f"(remainder={remainder}, need {CHUNK_SIZE - remainder} more)"
+            )
+        else:
+            logger.debug(f"[CACHE] Prefix chunk-aligned: {token_est} tokens")
+        
+        return is_aligned
     
     def log_request_complete(
         self,

@@ -16,7 +16,7 @@ WHAT THESE TESTS VERIFY:
 import pytest
 
 from src.cache.metrics import CacheAwareMetrics
-from src.prompts.manager import DeterministicPromptBuilder
+from src.prompts.manager import DeterministicPromptBuilder, CHUNK_SIZE, TURN_BOUNDARY
 
 
 class TestPrefixAlignment:
@@ -153,3 +153,68 @@ class TestCacheMetrics:
         assert report["unique_prefix_hashes"] == 1
         assert report["prefix_alignment_ok"] is True
         assert report["inferred_cache_hit_rate"] == 1.0  # All non-first were hits
+
+
+class TestChunkAlignment:
+    """Tests for LMCache chunk alignment optimization."""
+    
+    def test_padded_manual_is_chunk_aligned(self, sample_manual: str):
+        """Verify padded manual aligns to CHUNK_SIZE boundary."""
+        builder = DeterministicPromptBuilder(sample_manual)
+        
+        # Token estimate should be divisible by CHUNK_SIZE
+        token_est = builder.prefix_tokens_est
+        remainder = token_est % CHUNK_SIZE
+        
+        assert remainder == 0, (
+            f"Padded manual not chunk-aligned: {token_est} tokens "
+            f"(remainder={remainder}, CHUNK_SIZE={CHUNK_SIZE})"
+        )
+    
+    def test_padding_adds_chunk_marker(self, sample_manual: str):
+        """Verify padding marker is present when padding is needed."""
+        builder = DeterministicPromptBuilder(sample_manual)
+        
+        # Check if padding marker is present (unless already aligned)
+        original_tokens = len(sample_manual) // 4
+        if original_tokens % CHUNK_SIZE != 0:
+            assert "<<< CHUNK_PADDING >>>" in builder.padded_manual
+    
+    def test_turn_boundary_in_history(self, sample_manual: str):
+        """Verify turn boundary separator is used in multi-turn history."""
+        builder = DeterministicPromptBuilder(sample_manual)
+        
+        history = [
+            {"role": "user", "content": "First question"},
+            {"role": "assistant", "content": "First answer"},
+            {"role": "user", "content": "Follow-up question"},
+        ]
+        
+        formatted = builder._format_history(history)
+        
+        # Should contain turn boundary markers between messages
+        assert TURN_BOUNDARY in formatted, (
+            f"Turn boundary marker not found in formatted history"
+        )
+        
+        # Should have 2 boundaries for 3 messages
+        boundary_count = formatted.count(TURN_BOUNDARY)
+        assert boundary_count == 2, f"Expected 2 boundaries, got {boundary_count}"
+    
+    def test_prefix_tokens_property(self, sample_manual: str):
+        """Verify prefix_tokens_est returns reasonable value."""
+        builder = DeterministicPromptBuilder(sample_manual)
+        
+        # Should be positive and larger than original estimate
+        assert builder.prefix_tokens_est > 0
+        
+        # Should be at least as large as original (padding only adds)
+        original_est = len(sample_manual) // 4
+        assert builder.prefix_tokens_est >= original_est
+    
+    def test_empty_history_format(self, sample_manual: str):
+        """Verify empty history returns placeholder."""
+        builder = DeterministicPromptBuilder(sample_manual)
+        
+        formatted = builder._format_history([])
+        assert formatted == "(No previous conversation)"

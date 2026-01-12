@@ -95,13 +95,19 @@ async def lifespan(app: FastAPI):
     logger.info("[STARTUP] Checkpointer initialized (MemorySaver)")
     
     # 4. Warm the cache with a simple request
-    logger.info("[STARTUP] Warming cache with initial request...")
+    # Use chunk-aligned padded manual for optimal cache efficiency
+    logger.info(
+        f"[STARTUP] Warming cache with chunk-aligned prefix: "
+        f"{prompt_builder.prefix_tokens_est} tokens"
+    )
     
     # Use prompty file for AGENTS.MD compliance (section 11.1)
+    import time
     import prompty
     warmup_prompty_path = Path(__file__).parent / "prompts" / "warmup.prompty"
     warmup_template = prompty.load(str(warmup_prompty_path))
-    warmup_prompt = prompty.prepare(warmup_template, {"manual_content": manual})
+    # Use padded_manual for chunk alignment!
+    warmup_prompt = prompty.prepare(warmup_template, {"manual_content": prompt_builder.padded_manual})
     
     # Normalize the prompt (handle list of messages if returned)
     if isinstance(warmup_prompt, list):
@@ -112,8 +118,13 @@ async def lifespan(app: FastAPI):
     
     try:
         llm = get_llm()
+        warmup_start = time.perf_counter()
         response = await llm.ainvoke(warmup_prompt)
-        logger.info(f"[STARTUP] Cache warmed successfully: {response.content[:50]}...")
+        warmup_ttft = time.perf_counter() - warmup_start
+        logger.info(
+            f"[STARTUP] Cache warmed successfully in {warmup_ttft:.2f}s (cold TTFT baseline). "
+            f"Response: {response.content[:50]}..."
+        )
     except Exception as e:
         logger.warning(f"[STARTUP] Cache warm failed (non-fatal): {e}")
     
