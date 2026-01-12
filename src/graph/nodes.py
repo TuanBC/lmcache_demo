@@ -28,15 +28,14 @@ import asyncio
 import json
 import logging
 import time
-from typing import Any
 
+import httpx
 from langchain_openai import ChatOpenAI
 from langfuse import get_client
-from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
-import httpx
+from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from src.cache.metrics import cache_metrics
-from src.config.langfuse import observe, propagate_attributes, get_langfuse_handler
+from src.config.langfuse import get_langfuse_handler, observe, propagate_attributes
 from src.config.settings import get_settings
 from src.graph.state import AgentState
 from src.prompts.manager import DeterministicPromptBuilder
@@ -81,9 +80,7 @@ async def invoke_llm_with_retry(
     # Langfuse v3 uses get_client().update_current_span()
     try:
         langfuse_client = get_client()
-        langfuse_client.update_current_span(
-            metadata={"ttft_seconds": ttft, **(metadata or {})}
-        )
+        langfuse_client.update_current_span(metadata={"ttft_seconds": ttft, **(metadata or {})})
     except Exception as e:
         # Don't fail the LLM call if Langfuse update fails
         logger.debug(f"Langfuse span update skipped: {e}")

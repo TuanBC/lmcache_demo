@@ -55,67 +55,69 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     """
     Application lifespan with cache warming and checkpointer setup.
-    
+
     CACHE OPTIMIZATION:
     -------------------
     We warm the cache at startup by sending a simple request
     with the full manual. This pre-populates the server's KV cache
     so subsequent requests are faster.
-    
+
     CHECKPOINTER (AGENTS.MD):
     -------------------------
     Initializes MemorySaver for development. For production, replace
     with AsyncSqliteSaver for persistent state across restarts.
     """
     settings = get_settings()
-    
+
     logger.info("[STARTUP] Initializing Bank Multi-Agent Expert System...")
-    
+
     # 1. Load the operations manual
     manual_path = Path(settings.manual_path)
     manual = load_manual(manual_path)
-    
+
     # Store in app state (shared across all requests)
     app.state.manual = manual
-    
+
     # 2. Build the prompt builder
     prompt_builder = DeterministicPromptBuilder(manual)
     app.state.prompt_builder = prompt_builder
-    
-    logger.info(
-        f"[STARTUP] Manual loaded: {len(manual)} chars, hash={prompt_builder.manual_hash}"
-    )
-    
+
+    logger.info(f"[STARTUP] Manual loaded: {len(manual)} chars, hash={prompt_builder.manual_hash}")
+
     # 3. Initialize checkpointer (AGENTS.MD compliant)
     # Use MemorySaver for development (resets on restart)
     # For production, use: checkpointer = await AsyncSqliteSaver.from_conn_string("checkpoints.db")
     checkpointer = MemorySaver()
     app.state.checkpointer = checkpointer
-    
+
     logger.info("[STARTUP] Checkpointer initialized (MemorySaver)")
-    
+
     # 4. Warm the cache with a simple request
     # Use chunk-aligned padded manual for optimal cache efficiency
     logger.info(
         f"[STARTUP] Warming cache with chunk-aligned prefix: "
         f"{prompt_builder.prefix_tokens_est} tokens"
     )
-    
+
     # Use prompty file for AGENTS.MD compliance (section 11.1)
     import time
+
     import prompty
+
     warmup_prompty_path = Path(__file__).parent / "prompts" / "warmup.prompty"
     warmup_template = prompty.load(str(warmup_prompty_path))
     # Use padded_manual for chunk alignment!
-    warmup_prompt = prompty.prepare(warmup_template, {"manual_content": prompt_builder.padded_manual})
-    
+    warmup_prompt = prompty.prepare(
+        warmup_template, {"manual_content": prompt_builder.padded_manual}
+    )
+
     # Normalize the prompt (handle list of messages if returned)
     if isinstance(warmup_prompt, list):
         # Convert message list to string
         warmup_prompt = "\n".join(
             msg.get("content", "") for msg in warmup_prompt if msg.get("content")
         )
-    
+
     try:
         llm = get_llm()
         warmup_start = time.perf_counter()
@@ -127,32 +129,32 @@ async def lifespan(app: FastAPI):
         )
     except Exception as e:
         logger.warning(f"[STARTUP] Cache warm failed (non-fatal): {e}")
-    
+
     # 5. Build the graph with checkpointer
     graph = build_graph(checkpointer=checkpointer)
     app.state.graph = graph
-    
+
     logger.info("[STARTUP] Application ready!")
-    
+
     yield
-    
+
     # Shutdown - cleanup checkpointer if needed
     logger.info("[SHUTDOWN] Shutting down...")
-    
+
     # For AsyncSqliteSaver, you would call: await checkpointer.aclose()
     # MemorySaver doesn't require cleanup
 
 
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application."""
-    
+
     app = FastAPI(
         title="Bank Multi-Agent Expert System",
         description="High-Efficiency Multi-Agent system for bank operations manual queries",
         version="0.1.0",
         lifespan=lifespan,
     )
-    
+
     # Add CORS middleware
     app.add_middleware(
         CORSMiddleware,
@@ -161,10 +163,10 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    
+
     # Include routes
     app.include_router(api_router)
-    
+
     return app
 
 
@@ -174,7 +176,7 @@ app = create_app()
 
 if __name__ == "__main__":
     import uvicorn
-    
+
     settings = get_settings()
     uvicorn.run(
         "src.main:app",

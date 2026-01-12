@@ -27,6 +27,7 @@ dependencies = [
     "pip>=25.3",
     "ruff>=0.14.11",
     "pytest>=9.0.2",
+    "pre-commit>=4.5.1",
 ]
 
 [project.optional-dependencies]
@@ -54,6 +55,7 @@ target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]  # Allow long lines
 
 [tool.mypy]
 python_version = "3.13"
