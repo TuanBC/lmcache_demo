@@ -29,6 +29,10 @@ dependencies = [
     "pytest>=9.0.2",
     "pre-commit>=4.5.1",
     "prometheus-client>=0.24.0",
+    # CLI tools
+    "rich>=14.2.0",
+    # Streaming
+    "sse-starlette>=2.0.0",
 ]
 
 [project.optional-dependencies]

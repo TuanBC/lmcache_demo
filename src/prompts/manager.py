@@ -29,7 +29,16 @@ logger = logging.getLogger(__name__)
 # These values MUST match the LMCache server configuration.
 # Chunk alignment ensures prompts end on cache block boundaries.
 CHUNK_SIZE = 256  # tokens per cache chunk (matches lmcache-config.yaml)
-TURN_BOUNDARY = "\n<<< TURN_BOUNDARY >>>\n"  # Separator for multi-turn caching
+
+# TURN_BOUNDARY must match blend_special_str in lmcache-config.yaml
+# This enables CacheBlend to efficiently reuse KV cache in multi-turn conversations
+TURN_BOUNDARY = "\n<<< TURN >>>\n"  # Aligned with blend_special_str
+
+# The intro text that appears BEFORE the manual in all prompty templates
+# This is included in the cacheable prefix, so we must account for it in padding
+INTRO_TEXT_EST_TOKENS = 30  # ~120 chars of intro ("You are an AI assistant...")
+END_MARKER = "<<< END OF MANUAL >>>"
+END_MARKER_TOKENS = 6  # ~24 chars
 
 
 class DeterministicPromptBuilder:
@@ -57,11 +66,12 @@ class DeterministicPromptBuilder:
         )
 
         # Pre-compute padded manual for chunk alignment
-        self._padded_manual = self._pad_to_chunk_boundary(self._manual)
-        token_est = len(self._padded_manual) // 4
+        # Account for intro text + manual + END_MARKER = full cacheable prefix
+        self._padded_manual = self._pad_to_chunk_boundary_full_prefix(self._manual)
+        token_est = (len(self._padded_manual) // 4) + INTRO_TEXT_EST_TOKENS + END_MARKER_TOKENS
         logger.info(
             f"[PROMPT] Manual padded for chunk alignment: "
-            f"{token_est} tokens (aligned to {CHUNK_SIZE})"
+            f"~{token_est} tokens total prefix (aligned to {CHUNK_SIZE})"
         )
 
     def _estimate_tokens(self, text: str) -> int:
@@ -72,33 +82,39 @@ class DeterministicPromptBuilder:
         """
         return len(text) // 4
 
-    def _pad_to_chunk_boundary(self, text: str) -> str:
-        """Pad text to align with LMCache chunk boundaries.
+    def _pad_to_chunk_boundary_full_prefix(self, manual_text: str) -> str:
+        """Pad manual to align FULL PREFIX to LMCache chunk boundaries.
 
         CACHE OPTIMIZATION:
         -------------------
-        LMCache stores KV cache in chunks of CHUNK_SIZE tokens.
-        If a prefix ends mid-chunk, the partial chunk may not be reused.
-        By padding to chunk boundaries, we ensure full chunk utilization.
+        The cacheable prefix = intro_text + manual + END_MARKER
+        We must account for all components when calculating padding.
 
         Returns:
-            Text with padding to reach next chunk boundary.
+            Manual text with padding to make full prefix chunk-aligned.
         """
-        token_count = self._estimate_tokens(text)
-        remainder = token_count % CHUNK_SIZE
+        # Calculate total prefix tokens: intro + manual + end_marker
+        manual_tokens = self._estimate_tokens(manual_text)
+        total_prefix_tokens = INTRO_TEXT_EST_TOKENS + manual_tokens + END_MARKER_TOKENS
+
+        remainder = total_prefix_tokens % CHUNK_SIZE
 
         if remainder == 0:
             # Already aligned
-            return text
+            return manual_text
 
         padding_tokens = CHUNK_SIZE - remainder
         # Each padding token ≈ 4 chars (using spaces with markers)
         padding_chars = padding_tokens * 4
 
         # Use visible marker + whitespace for debugging
-        padding = "\n<<< CHUNK_PADDING >>>" + " " * (padding_chars - 21)
+        marker = "\n<<< CHUNK_PADDING >>>"
+        if padding_chars > len(marker):
+            padding = marker + " " * (padding_chars - len(marker))
+        else:
+            padding = " " * padding_chars
 
-        return text + padding
+        return manual_text + padding
 
     @property
     def padded_manual(self) -> str:

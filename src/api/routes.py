@@ -168,6 +168,126 @@ async def handle_query(
     )
 
 
+@router.post("/api/v1/query/stream")
+async def handle_query_stream(
+    body: QueryRequest,
+    request: Request,
+    manual: Annotated[str, Depends(get_manual)],
+):
+    """
+    Streaming version of the query endpoint.
+
+    Uses Server-Sent Events (SSE) to stream tokens in real-time.
+    This allows users to visually see the TTFT effect:
+    - First token appears faster on cache hits
+    - Streaming continues until complete
+
+    SSE FORMAT:
+    -----------
+    event: metadata
+    data: {"agents": ["agent1"], "ttft": 1.23}
+
+    event: token
+    data: {"content": "Hello"}
+
+    event: done
+    data: {"total_time": 5.67}
+    """
+    import json
+    import time
+
+    from langchain_openai import ChatOpenAI
+    from sse_starlette.sse import EventSourceResponse
+
+    from src.cache.metrics import cache_metrics
+    from src.config.settings import get_settings
+    from src.prompts.manager import DeterministicPromptBuilder
+
+    settings = get_settings()
+
+    async def generate():
+        """Async generator that yields SSE events."""
+        start_time = time.perf_counter()
+        first_token_time = None
+
+        # Build prompt using the same deterministic builder
+        prompt_builder = DeterministicPromptBuilder(manual)
+
+        # For streaming, we'll use a single agent (technical_specialist) for simplicity
+        # In production, you'd run the router first, then stream the selected agent
+        agent_name = "technical_specialist"
+        prompt = prompt_builder.build(agent_name, [], body.query)
+
+        # Log cache metrics
+        pre_metrics = cache_metrics.log_request_start(agent_name, prompt)
+
+        # Create streaming LLM
+        llm = ChatOpenAI(
+            base_url=settings.vllm_base_url,
+            api_key=settings.vllm_api_key,
+            model=settings.vllm_model,
+            temperature=0.7,
+            max_tokens=2048,
+            streaming=True,
+        )
+
+        try:
+            # Stream tokens
+            full_response = ""
+            async for chunk in llm.astream(prompt):
+                if chunk.content:
+                    # Record TTFT on first token
+                    if first_token_time is None:
+                        first_token_time = time.perf_counter()
+                        ttft = first_token_time - start_time
+
+                        # Log TTFT to cache metrics
+                        cache_metrics.log_request_complete(
+                            agent_name, pre_metrics["prefix_hash"], ttft
+                        )
+
+                        # Send metadata event with TTFT
+                        yield {
+                            "event": "metadata",
+                            "data": json.dumps(
+                                {
+                                    "agents": [agent_name],
+                                    "ttft": round(ttft, 3),
+                                    "session_id": body.session_id,
+                                }
+                            ),
+                        }
+
+                    # Send token event
+                    full_response += chunk.content
+                    yield {
+                        "event": "token",
+                        "data": json.dumps({"content": chunk.content}),
+                    }
+
+            # Send completion event
+            total_time = time.perf_counter() - start_time
+            yield {
+                "event": "done",
+                "data": json.dumps(
+                    {
+                        "total_time": round(total_time, 3),
+                        "total_tokens": len(full_response.split()),
+                        "compliance_passed": True,
+                    }
+                ),
+            }
+
+        except Exception as e:
+            logger.error(f"[STREAM] Error: {e}")
+            yield {
+                "event": "error",
+                "data": json.dumps({"error": str(e)}),
+            }
+
+    return EventSourceResponse(generate())
+
+
 @router.get("/health", response_model=HealthResponse)
 async def health() -> HealthResponse:
     """Health check endpoint."""

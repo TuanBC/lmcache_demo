@@ -1,18 +1,34 @@
 # =============================================================================
 # LMCache Configuration
 # =============================================================================
-# For shared KV cache across all agents.
-# This enables the 25k-token manual prefix to be cached and reused.
+# Optimized for multi-agent banking system with 25k-token shared prefix.
+# See: https://docs.lmcache.ai/api_reference/configurations.html
 # =============================================================================
 
-chunk_size: 256
-local_cpu: false
+# Core settings
+chunk_size: 256                    # Default, matches our padding
+local_cpu: true                    # Enable CPU caching (L1)
+max_local_cpu_size: 10             # 10GB CPU/RAM cache
+use_layerwise: true                # Pipelined KV loading (reduces latency)
+
+# Disk caching - SSD offload (L2, larger but slower than RAM)
+local_disk: "file:///tmp/lmcache"  # Path to SSD cache directory
+max_local_disk_size: 50            # 50GB disk cache
+
+# Remote storage (for Docker deployment)
 remote_url: "http://lmcache:8080"
 remote_serde: "naive"
 
 # Hash algorithm for cache keys (xxhash is faster than sha256)
 pre_caching_hash_algorithm: "xxhash"
 
-# Connection settings
-connection_timeout: 30
-retry_attempts: 3
+# CacheBlend for multi-turn conversations
+enable_blending: true
+blend_special_str: "\n<<< TURN >>>\n"  # Must match TURN_BOUNDARY in manager.py
+blend_recompute_ratios: 0.15
+blend_check_layers: 1
+
+# Performance tuning
+blocking_timeout_secs: 10
+save_decode_cache: false           # Decode cache not useful for prefix reuse
+
