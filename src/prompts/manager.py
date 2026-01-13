@@ -65,14 +65,13 @@ class DeterministicPromptBuilder:
             f"len={len(self._manual)} chars, hash={self._manual_hash}"
         )
 
-        # Pre-compute padded manual for chunk alignment
-        # Account for intro text + manual + END_MARKER = full cacheable prefix
-        self._padded_manual = self._pad_to_chunk_boundary_full_prefix(self._manual)
-        token_est = (len(self._padded_manual) // 4) + INTRO_TEXT_EST_TOKENS + END_MARKER_TOKENS
-        logger.info(
-            f"[PROMPT] Manual padded for chunk alignment: "
-            f"~{token_est} tokens total prefix (aligned to {CHUNK_SIZE})"
-        )
+        # Use normalized manual directly - NO PADDING
+        # Padding was removed because client-side token estimation (len//4) is inexact
+        # and likely causes misalignment on the server side.
+        # Natural stability of the prefix is better for cache hits.
+        self._padded_manual = self._manual
+        token_est = self._estimate_tokens(self._manual) + INTRO_TEXT_EST_TOKENS + END_MARKER_TOKENS
+        logger.info(f"[PROMPT] Manual loaded (no padding): ~{token_est} tokens total prefix")
 
     def _estimate_tokens(self, text: str) -> int:
         """Estimate token count from character count.
@@ -82,48 +81,16 @@ class DeterministicPromptBuilder:
         """
         return len(text) // 4
 
-    def _pad_to_chunk_boundary_full_prefix(self, manual_text: str) -> str:
-        """Pad manual to align FULL PREFIX to LMCache chunk boundaries.
-
-        CACHE OPTIMIZATION:
-        -------------------
-        The cacheable prefix = intro_text + manual + END_MARKER
-        We must account for all components when calculating padding.
-
-        Returns:
-            Manual text with padding to make full prefix chunk-aligned.
-        """
-        # Calculate total prefix tokens: intro + manual + end_marker
-        manual_tokens = self._estimate_tokens(manual_text)
-        total_prefix_tokens = INTRO_TEXT_EST_TOKENS + manual_tokens + END_MARKER_TOKENS
-
-        remainder = total_prefix_tokens % CHUNK_SIZE
-
-        if remainder == 0:
-            # Already aligned
-            return manual_text
-
-        padding_tokens = CHUNK_SIZE - remainder
-        # Each padding token ≈ 4 chars (using spaces with markers)
-        padding_chars = padding_tokens * 4
-
-        # Use visible marker + whitespace for debugging
-        marker = "\n<<< CHUNK_PADDING >>>"
-        if padding_chars > len(marker):
-            padding = marker + " " * (padding_chars - len(marker))
-        else:
-            padding = " " * padding_chars
-
-        return manual_text + padding
+    # _pad_to_chunk_boundary_full_prefix REMOVED - Inexact padding hurts cache hits
 
     @property
     def padded_manual(self) -> str:
-        """Get chunk-aligned manual content for cache optimization."""
+        """Get manual content (no longer padded, name kept for compatibility)."""
         return self._padded_manual
 
     @property
     def prefix_tokens_est(self) -> int:
-        """Estimated token count of the padded prefix."""
+        """Estimated token count of the prefix."""
         return self._estimate_tokens(self._padded_manual)
 
     @staticmethod

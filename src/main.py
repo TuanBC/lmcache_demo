@@ -38,7 +38,6 @@ from langgraph.checkpoint.memory import MemorySaver
 from src.api.routes import router as api_router
 from src.config.settings import get_settings
 from src.graph.builder import build_graph
-from src.graph.nodes import get_llm
 from src.prompts.manager import DeterministicPromptBuilder, load_manual
 
 # Configure logging
@@ -92,43 +91,16 @@ async def lifespan(app: FastAPI):
 
     logger.info("[STARTUP] Checkpointer initialized (MemorySaver)")
 
-    # 4. Warm the cache with a simple request
-    # Use chunk-aligned padded manual for optimal cache efficiency
-    logger.info(
-        f"[STARTUP] Warming cache with chunk-aligned prefix: "
-        f"{prompt_builder.prefix_tokens_est} tokens"
-    )
+    logger.info("[STARTUP] Checkpointer initialized (MemorySaver)")
 
-    # Use prompty file for AGENTS.MD compliance (section 11.1)
-    import time
+    # 4. Warmup removed to allow accurate Cold vs Warm TTFT testing
+    # The application will now start "cold". The first user request will incur prefill latency.
+    # To re-enable production warmup, uncomment the block below.
 
-    import prompty
+    # logger.info(f"[STARTUP] Warming cache with full prefix...")
+    # ... (warmup logic commented out) ...
 
-    warmup_prompty_path = Path(__file__).parent / "prompts" / "warmup.prompty"
-    warmup_template = prompty.load(str(warmup_prompty_path))
-    # Use padded_manual for chunk alignment!
-    warmup_prompt = prompty.prepare(
-        warmup_template, {"manual_content": prompt_builder.padded_manual}
-    )
-
-    # Normalize the prompt (handle list of messages if returned)
-    if isinstance(warmup_prompt, list):
-        # Convert message list to string
-        warmup_prompt = "\n".join(
-            msg.get("content", "") for msg in warmup_prompt if msg.get("content")
-        )
-
-    try:
-        llm = get_llm()
-        warmup_start = time.perf_counter()
-        response = await llm.ainvoke(warmup_prompt)
-        warmup_ttft = time.perf_counter() - warmup_start
-        logger.info(
-            f"[STARTUP] Cache warmed successfully in {warmup_ttft:.2f}s (cold TTFT baseline). "
-            f"Response: {response.content[:50]}..."
-        )
-    except Exception as e:
-        logger.warning(f"[STARTUP] Cache warm failed (non-fatal): {e}")
+    # 5. Build the graph with checkpointer
 
     # 5. Build the graph with checkpointer
     graph = build_graph(checkpointer=checkpointer)
