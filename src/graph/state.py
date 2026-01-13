@@ -56,5 +56,8 @@ class AgentState(TypedDict):
     compliance_issues: Annotated[list[str], add]  # Accumulate issues found
     retry_count: int  # Number of retry attempts (if any)
 
+    # Session tracking
+    session_id: str  # Session ID for tracing and history
+
     # Metrics
     ttft_seconds: float  # Time to first token (for cache analysis)

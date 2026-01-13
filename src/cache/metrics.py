@@ -32,6 +32,9 @@ from datetime import UTC, datetime
 # Import chunk size from prompt manager for alignment checks
 from src.prompts.manager import CHUNK_SIZE
 
+# NOTE: Prometheus metrics are imported lazily inside methods to avoid
+# circular imports (prometheus.py may import from routes, which imports metrics)
+
 logger = logging.getLogger(__name__)
 
 
@@ -87,6 +90,21 @@ class CacheAwareMetrics:
                     f"[CACHE] PREFIX MISMATCH! Expected={self.expected_prefix_hash} "
                     f"Got={prefix_hash}. Cache will NOT be reused!"
                 )
+                # Record prefix mismatch in Prometheus (lazy import to avoid circular)
+                try:
+                    from src.api.prometheus import record_prefix_mismatch
+
+                    record_prefix_mismatch(agent_name)
+                except ImportError:
+                    pass
+
+        # Record request start in Prometheus (lazy import to avoid circular)
+        try:
+            from src.api.prometheus import record_request
+
+            record_request(agent_name, "started")
+        except ImportError:
+            pass
 
         return {
             "agent": agent_name,
@@ -146,11 +164,28 @@ class CacheAwareMetrics:
         # Record history
         self.ttft_history.append((agent_name, ttft_seconds, prefix_hash))
 
+        # Record TTFT in Prometheus histogram (lazy import to avoid circular)
+        try:
+            from src.api.prometheus import (
+                record_cache_hit,
+                record_cache_miss,
+                record_ttft,
+                set_cold_cache_baseline,
+            )
+
+            record_ttft(agent_name, ttft_seconds)
+            prometheus_available = True
+        except ImportError:
+            prometheus_available = False
+
         # Set baseline from first request
         if self.cold_cache_ttft is None:
             self.cold_cache_ttft = ttft_seconds
             is_cache_hit = False  # First request is always cold
             logger.info(f"[CACHE] Cold cache baseline established: {ttft_seconds:.2f}s")
+            # Set cold cache baseline in Prometheus
+            if prometheus_available:
+                set_cold_cache_baseline(ttft_seconds)
         else:
             # Infer cache hit from TTFT ratio
             ttft_ratio = ttft_seconds / self.cold_cache_ttft
@@ -161,6 +196,13 @@ class CacheAwareMetrics:
                 f"[CACHE] Agent={agent_name} TTFT={ttft_seconds:.2f}s "
                 f"ratio={ttft_ratio:.2f} -> {status}"
             )
+
+            # Record cache hit/miss in Prometheus
+            if prometheus_available:
+                if is_cache_hit:
+                    record_cache_hit(agent_name)
+                else:
+                    record_cache_miss(agent_name)
 
         # Calculate running stats
         recent_ttfts = [t for _, t, _ in self.ttft_history[-10:]]

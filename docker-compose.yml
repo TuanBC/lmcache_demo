@@ -1,0 +1,161 @@
+version: "3.8"
+
+# =============================================================================
+# Bank Multi-Agent Expert System - Docker Compose
+# =============================================================================
+# 
+# This compose file sets up the complete production stack:
+# - FastAPI Router with LangGraph orchestration
+# - vLLM Server with LMCache prefix caching
+# - LMCache Server for shared KV cache storage
+# - Prometheus for metrics collection
+# - Grafana for monitoring dashboards
+#
+# USAGE:
+#   docker-compose up -d          # Start all services
+#   docker-compose logs -f router # Follow router logs
+#   docker-compose down           # Stop all services
+# =============================================================================
+
+services:
+  # ==========================================================================
+  # Router Service (FastAPI + LangGraph)
+  # ==========================================================================
+  router:
+    build: .
+    container_name: llm-router
+    ports:
+      - "8000:8000"
+    environment:
+      - VLLM_BASE_URL=http://vllm:8000/v1
+      - VLLM_MODEL=Qwen/Qwen2.5-7B-Instruct
+      - VLLM_API_KEY=${VLLM_API_KEY:-not-required}
+      - LANGFUSE_PUBLIC_KEY=${LANGFUSE_PUBLIC_KEY}
+      - LANGFUSE_SECRET_KEY=${LANGFUSE_SECRET_KEY}
+      - LANGFUSE_BASE_URL=${LANGFUSE_BASE_URL:-https://us.cloud.langfuse.com}
+      - MANUAL_PATH=/app/data/operations_manual.txt
+    volumes:
+      - ./data:/app/data:ro
+    depends_on:
+      vllm:
+        condition: service_healthy
+    networks:
+      - llm-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ==========================================================================
+  # Single vLLM Server (Shared by all 3 agents)
+  # ==========================================================================
+  vllm:
+    image: vllm/vllm-openai:v0.6.4
+    container_name: vllm-server
+    ports:
+      - "8001:8000"
+    environment:
+      - LMCACHE_CONFIG_FILE=/app/lmcache-config.yaml
+      - HF_TOKEN=${HF_TOKEN}
+    volumes:
+      - ./lmcache-config.yaml:/app/lmcache-config.yaml:ro
+      - huggingface-cache:/root/.cache/huggingface
+    command: >
+      --model Qwen/Qwen2.5-7B-Instruct
+      --max-model-len 32768
+      --enable-prefix-caching
+      --gpu-memory-utilization 0.9
+      --host 0.0.0.0
+      --port 8000
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - llm-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  # ==========================================================================
+  # LMCache Server (Shared KV Cache Storage)
+  # ==========================================================================
+  lmcache:
+    image: lmcache/lmcache-server:v0.4.0
+    container_name: lmcache-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - lmcache-data:/data
+    command: --port 8080 --storage-path /data
+    networks:
+      - llm-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ==========================================================================
+  # Prometheus (Metrics Collection)
+  # ==========================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    networks:
+      - llm-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ==========================================================================
+  # Grafana (Monitoring Dashboards)
+  # ==========================================================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - llm-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  huggingface-cache:
+  lmcache-data:
+  prometheus-data:
+  grafana-data:
+
+networks:
+  llm-network:
+    driver: bridge

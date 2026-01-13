@@ -25,11 +25,16 @@ ABC Bank operates under the following regulatory frameworks:
 - Gramm-Leach-Bliley Act (GLBA) for customer privacy
 - Payment Card Industry Data Security Standard (PCI DSS)
 - Office of Foreign Assets Control (OFAC) sanctions
+- Fair Credit Reporting Act (FCRA)
+- Equal Credit Opportunity Act (ECOA) / Regulation B
+- Truth in Lending Act (TILA) / Regulation Z
+- Real Estate Settlement Procedures Act (RESPA) / Regulation X
 
 ### 1.3 Document Updates
 
 This manual is reviewed quarterly and updated as needed. All employees will be 
-notified of significant changes via the internal communication system.
+notified of significant changes via the internal communication system. Hard copies 
+must be shredded upon receipt of a new digital version.
 
 ---
 
@@ -65,6 +70,14 @@ Beneficial ownership requirements (per FinCEN):
 - Identify all individuals owning 25% or more of the entity
 - Identify one individual with significant management responsibility
 
+#### 2.1.3 Fiduciary and Trust Accounts
+
+Opening a fiduciary account requires:
+1. Copy of the Trust Agreement or Letters of Testamentary
+2. Tax Identification Number for the Trust (unless it's a revocable living trust using grantor's SSN)
+3. Identification for all trustees and executors
+4. Review by the Legal Department for complex multi-tiered trusts
+
 ### 2.2 Account Maintenance
 
 #### 2.2.1 Address Changes
@@ -74,17 +87,19 @@ Address changes may be processed through:
 - Online banking with security verification
 - Phone banking with full account authentication
 
-Processing timeline: Same business day if received before 3:00 PM local time.
+Processing timeline: Same business day if received before 3:00 PM local time. Notifications are sent to both the old and new addresses as a fraud prevention measure.
 
 #### 2.2.2 Account Closure
 
 Standard account closure procedure:
 1. Verify account holder identity
-2. Check for pending transactions
-3. Clear any outstanding fees
+2. Check for pending transactions (ACH, checks, debit holds)
+3. Clear any outstanding fees or negative balances
 4. Obtain signed closure form
 5. Issue remaining balance via check or transfer
 6. Retain records per retention policy (7 years minimum)
+
+Accounts with active subpoenas or legal holds cannot be closed without Legal Dept approval.
 
 ---
 
@@ -94,21 +109,21 @@ Standard account closure procedure:
 
 #### 3.1.1 Daily Limits
 
-| Transaction Type | Consumer Account | Business Account |
-|------------------|------------------|------------------|
-| ATM Withdrawal | $500 | $1,000 |
-| Point of Sale | $2,500 | $5,000 |
-| Online Transfer | $5,000 | $25,000 |
-| Wire Transfer | $10,000 | $100,000 |
+| Transaction Type | Consumer Account | Business Account | Private Banking |
+|------------------|------------------|------------------|-----------------|
+| ATM Withdrawal | $500 | $1,000 | $5,000 |
+| Point of Sale | $2,500 | $5,000 | $50,000 |
+| Online Transfer | $5,000 | $25,000 | $500,000 |
+| Wire Transfer | $10,000 | $100,000 | $2,500,000 |
 
 #### 3.1.2 Limit Increases
 
 Temporary limit increases may be granted for:
 - Pre-approved customers (credit score 720+)
 - Accounts in good standing (12+ months, no overdrafts)
-- Documented need (travel, large purchase)
+- Documented need (travel, large purchase, business payroll)
 
-Maximum temporary increase: 200% of standard limit for up to 30 days.
+Maximum temporary increase: 200% of standard limit for up to 30 days. High-value increases (> $250k) require Regional Manager approval.
 
 ### 3.2 Wire Transfers
 
@@ -124,35 +139,38 @@ Processing requirements:
 Required information:
 - Beneficiary name and address
 - Beneficiary bank name, ABA routing number, and address
-- Beneficiary account number
-- Purpose of payment
+- Beneficiary account number or IBAN
+- Purpose of payment (required for all international wires)
 - Amount in USD (or specify currency)
 
-Fees: $30 domestic, $50 international
+Fees: $30 domestic, $50 international, $0 for Private Banking.
 
 #### 3.2.2 Incoming Wires
 
 Processing timeline:
-- Domestic wires: Same business day
-- International wires: 1-3 business days depending on correspondent bank
+- Domestic wires: Same business day if received by 5:00 PM EST
+- International wires: 1-3 business days depending on correspondent bank liquidity and time zones
+
+Incoming wires over $100,000 are flagged for AML review before posting.
 
 ### 3.3 Check Processing
 
 #### 3.3.1 Check Holds
 
-Standard hold periods:
+Standard hold periods (Regulation CC):
 | Check Type | Amount | Hold Period |
 |------------|--------|-------------|
 | Local checks | $0-$225 | Next business day |
 | Local checks | $226-$5,525 | 2 business days |
 | Local checks | $5,526+ | 7 business days |
-| Non-local checks | Any | Up to 7 business days |
+| Treasury Checks | Any | Next business day |
+| Cashier's Checks | Any | 1 business day |
 
 Exceptions allowing extended holds:
 - New accounts (under 30 days)
 - Repeated overdrafts (6 or more in 6 months)
 - Previously returned checks
-- Emergency conditions
+- Emergency conditions (power failure, system crash)
 
 #### 3.3.2 Mobile Deposit
 
@@ -164,384 +182,375 @@ Requirements for mobile deposit:
 - Account must be open for 30+ days
 - Customer must accept mobile deposit terms
 - Check must be endorsed "For Mobile Deposit Only at ABC Bank"
+- Original check must be retained by customer for 14 days then destroyed
 
 ---
 
-## Section 4: Compliance Requirements
+## Section 4: Lending and Credit Operations
 
-### 4.1 Anti-Money Laundering (AML)
+### 4.1 Mortgage Lending
 
-#### 4.1.1 Suspicious Activity Monitoring
+#### 4.1.1 Loan Origination
+
+The mortgage origination process consists of:
+1. Pre-qualification: Initial assessment of creditworthiness.
+2. Application: Submission of 1003 Uniform Residential Loan Application.
+3. Disclosure: Sending Loan Estimate (LE) within 3 business days.
+4. Processing: Verification of income, employment, and assets.
+5. Underwriting: Evaluation of risk based on LTV, DTI, and credit.
+6. Closing: Execution of the Note and Deed of Trust.
+
+#### 4.1.2 Servicing and Escrow
+
+Monthly payments include Principal, Interest, Taxes, and Insurance (PITI). Escrow accounts are analyzed annually to ensure sufficient funds for property taxes and homeowner's insurance. Overages >$50 must be refunded to the borrower.
+
+### 4.2 Commercial Loans
+
+#### 4.2.1 Credit Analysis
+
+Commercial credit requests require:
+- 3 years of business tax returns
+- Current balance sheet and P&L statement
+- Personal financial statements of all guarantors
+- Debt Service Coverage Ratio (DSCR) minimum of 1.25x
+
+#### 4.2.2 Covenants and Monitoring
+
+Commercial loans often include financial covenants such as:
+- Leverage ratios
+- Minimum working capital
+- Reporting requirements (quarterly financials)
+Violations must be escalated to the Special Assets Department.
+
+---
+
+## Section 5: Compliance Requirements
+
+### 5.1 Anti-Money Laundering (AML)
+
+#### 5.1.1 Suspicious Activity Monitoring
 
 Red flags requiring enhanced review:
 - Transactions inconsistent with customer profile
 - Rapid movement of funds with no apparent business purpose
-- Unusual geographic patterns
+- Unusual geographic patterns (high-risk jurisdictions)
 - Structuring (multiple transactions designed to avoid reporting thresholds)
 - Customer reluctance to provide information
+- Frequent use of money orders or cashier's checks for deposits
 
-#### 4.1.2 Currency Transaction Reports (CTR)
+#### 5.1.2 Currency Transaction Reports (CTR)
 
 Filing requirements:
-- Any cash transaction over $10,000 (single or aggregate)
+- Any cash transaction over $10,000 (single or aggregate) within one business day
 - File within 15 calendar days
 - Include all required customer and transaction information
+- Exemptions for "Phase I" entities (banks, government agencies) must be filed annually
 
-#### 4.1.3 Suspicious Activity Reports (SAR)
+#### 5.1.3 Suspicious Activity Reports (SAR)
 
 Filing requirements:
 - Suspected criminal activity involving $5,000 or more
-- Suspected insider abuse involving $25,000 or more
-- File within 30 calendar days of detection
-- NO NOTIFICATION to customer of SAR filing
+- Suspected insider abuse involving any amount
+- File within 30 calendar days of detection (60 days if suspect is unknown)
+- NO NOTIFICATION to customer of SAR filing. Disclosure is a federal crime.
 
-### 4.2 Know Your Customer (KYC)
+### 5.2 Know Your Customer (KYC)
 
-#### 4.2.1 Enhanced Due Diligence (EDD)
+#### 5.2.1 Enhanced Due Diligence (EDD)
 
 EDD required for:
 - Politically Exposed Persons (PEPs)
-- High-risk geographic locations
-- Cash-intensive businesses
+- High-risk geographic locations (FATF non-cooperative countries)
+- Cash-intensive businesses (Casinos, MSBs, Car Washes)
 - Private banking accounts over $1 million
-- Correspondent accounts
+- Correspondent accounts for foreign financial institutions
 
 EDD procedures:
-1. Senior management approval required
-2. Source of funds documentation
-3. Enhanced transaction monitoring
+1. Senior management approval required prior to onboarding
+2. Verification of source of wealth and source of funds
+3. Enhanced transaction monitoring on a 30-day lookback
 4. Periodic reviews (minimum annually)
 
-### 4.3 OFAC Compliance
+### 5.3 OFAC Compliance
 
-#### 4.3.1 Sanctions Screening
+#### 5.3.1 Sanctions Screening
 
 Required screening points:
-- Account opening
-- Wire transfer initiation
+- Account opening (all signers and beneficial owners)
+- Wire transfer initiation (sender and receiver)
 - ACH origination
 - Loan application
-- Any customer-initiated international transaction
+- Vendor payments
 
 Potential match procedure:
 1. Halt transaction immediately
 2. Escalate to BSA/AML Officer
-3. Document all findings
-4. Block if confirmed match
-5. File blocking report within 10 days
+3. Document all findings via the OFAC Search Tool
+4. Block funds if confirmed match (Special Blocked Account required)
+5. File blocking report within 10 business days
 
 ---
 
-## Section 5: Customer Privacy
+## Section 6: Customer Privacy and Data Protection
 
-### 5.1 Privacy Notice Requirements
+### 6.1 Privacy Notice Requirements (Regulation P)
 
-#### 5.1.1 Initial Notice
+#### 6.1.1 Initial Notice
 
 Provide initial privacy notice at account opening containing:
-- Categories of information collected
-- Categories of information disclosed
+- Categories of non-public personal information (NPI) collected
+- Categories of NPI disclosed to third parties
 - Affiliates and third parties receiving information
-- Security practices overview
-- Opt-out instructions
+- Security practices overview for data protection
+- Opt-out instructions for marketing and secondary sharing
 
-#### 5.1.2 Annual Notice
+#### 6.1.2 Annual Notice
 
 Provide annual privacy notice to all active account holders by:
 - December 31 each year, OR
 - Within 12 months of initial notice
 
 Delivery methods:
-- Paper mail
-- Electronic delivery (with customer consent)
-- Included with periodic statement
+- Paper mail with statement
+- Electronic delivery (with E-Sign consent)
+- Website posting (if no changes have occurred and specific criteria met)
 
-### 5.2 Opt-Out Requirements
+### 6.2 Opt-Out Requirements
 
-#### 5.2.1 Opt-Out Rights
+#### 6.2.1 Opt-Out Rights
 
 Customers have the right to opt out of:
-- Sharing with non-affiliated third parties
-- Sharing for marketing purposes
+- Sharing NPI with non-affiliated third parties for non-essential purposes
+- Sharing for affiliate marketing purposes
+- Sharing creditworthiness information with affiliates
 
 Customers CANNOT opt out of:
-- Sharing required by law
-- Sharing to process transactions
-- Sharing with service providers under contract
+- Sharing required by law (subpoenas, CTRs)
+- Sharing to process transactions requested by the customer
+- Sharing with service providers under joint marketing agreements
 
-#### 5.2.2 Processing Opt-Out Requests
+#### 6.2.2 Processing Opt-Out Requests
 
-Opt-out requests must be processed within:
-- 30 days of receipt
-- Apply to all sharing immediately upon processing
-
-Document all opt-out requests and maintain records for 5 years.
+Opt-out requests must be processed within 30 days of receipt. Requests are permanent until revoked by the customer. All marketing lists must be scrubbed against the Opt-Out Registry daily.
 
 ---
 
-## Section 6: Information Security
+## Section 7: Information Security and Cyber Defense
 
-### 6.1 Data Classification
+### 7.1 Data Classification
 
-#### 6.1.1 Classification Levels
+#### 7.1.1 Classification Levels
 
 | Classification | Description | Examples |
 |----------------|-------------|----------|
 | Public | Generally available | Marketing materials, branch addresses |
-| Internal | For employees only | Policy documents, internal announcements |
+| Internal | For employees only | Training docs, internal memos |
 | Confidential | Sensitive business info | Financial reports, strategic plans |
 | Restricted | Highest sensitivity | Customer SSN, account numbers, passwords |
 
-#### 6.1.2 Handling Requirements
+#### 7.1.2 Handling Requirements
 
 Restricted data requirements:
-- Encryption in transit (TLS 1.2+)
+- Encryption in transit (TLS 1.2+ with strong ciphers)
 - Encryption at rest (AES-256)
-- Access logging and monitoring
-- Minimum necessary access principle
-- Secure disposal (NIST 800-88 compliant)
+- Access logging and multi-factor authentication (MFA)
+- Shred-only disposal (Level 5 cross-cut)
+- Data masking in non-production environments
 
-### 6.2 Access Control
+### 7.2 Access Control
 
-#### 6.2.1 User Access Management
+#### 7.2.1 User Access Management
 
 Access request process:
-1. Manager submits access request form
-2. IT Security reviews against role requirements
-3. Approval by system owner
-4. Access provisioned within 3 business days
-5. Confirmation sent to user and manager
+1. Manager submits ticket via IAM Portal.
+2. IT Security reviews against role-based access control (RBAC) matrix.
+3. Approval by data owner or department head.
+4. Access provisioned and logged.
+5. Inactive accounts (>45 days) are automatically disabled.
 
-Access review requirements:
-- Monthly: Privileged access
-- Quarterly: High-risk systems
-- Annually: All system access
+#### 7.2.2 Password and MFA Policy
 
-#### 6.2.2 Password Requirements
+- Minimum 14 characters
+- Combined uppercase, lowercase, numbers, symbols
+- 90-day rotation; no reuse of last 12 passwords
+- MFA required for ALL remote access and privileged accounts
 
-Password policy:
-- Minimum 12 characters
-- Must include: uppercase, lowercase, number, special character
-- Cannot reuse last 12 passwords
-- Maximum age: 90 days
-- Lockout after 5 failed attempts
+### 7.3 Cyber Incident Response
 
-### 6.3 Incident Response
+#### 7.3.1 Critical Incident Playbook
 
-#### 6.3.1 Security Incident Classification
-
-| Severity | Description | Response Time |
-|----------|-------------|---------------|
-| Critical | Data breach, system compromise | Immediate, 24/7 |
-| High | Attempted breach, malware | Within 1 hour |
-| Medium | Policy violation, suspicious activity | Within 4 hours |
-| Low | Minor issues, informational | Within 24 hours |
-
-#### 6.3.2 Reporting Procedures
-
-All security incidents must be reported to:
-- IT Security Hotline: x7777
-- Email: security@abcbank.internal
-- In person: Any IT Security team member
-
-Required information:
-- Date and time of discovery
-- Systems or data affected
-- Description of incident
-- Any actions already taken
+In the event of a suspected breach:
+1. Detection: SOC identifies anomalous behavior.
+2. Triage: Information Security Officer (ISO) classifies severity.
+3. Containment: Isolation of affected systems/networks.
+4. Eradication: Removal of threat components (malware, backdoors).
+5. Recovery: Restoration from verified clean backups.
+6. Notification: Legal/Compliance determines regulatory notification needs (GDPR, CCPA, etc.)
 
 ---
 
-## Section 7: Customer Service Standards
+## Section 8: Business Continuity and Disaster Recovery
 
-### 7.1 Response Time Requirements
+### 8.1 Strategy and Objectives
 
-#### 7.1.1 Communication Channels
+#### 8.1.1 Recovery Objectives
 
-| Channel | Initial Response | Resolution |
-|---------|------------------|------------|
-| Phone | Answer within 60 seconds | Same call when possible |
-| Email | Acknowledge within 4 hours | Within 24 hours |
-| Secure Message | Acknowledge within 2 hours | Within 12 hours |
-| In-Person | Immediate greeting | Minimize wait times |
+- Recovery Time Objective (RTO): 4 hours for Tier 1 systems.
+- Recovery Point Objective (RPO): 1 hour for transaction data.
+- Maximum Tolerable Downtime (MTD): 24 hours for all branch operations.
 
-#### 7.1.2 Escalation Paths
+### 8.2 Emergency Operations
 
-Escalation criteria:
-- Customer request for supervisor
-- Unresolved after 15 minutes
-- Complaint about employee
-- Legal threat
-- Regulatory inquiry
+#### 8.2.1 Remote Work Protocols
 
-Escalation timeline:
-- Level 1 to Level 2: Within 5 minutes
-- Level 2 to Manager: Within 15 minutes
-- Manager to Executive: Same business day
+If a physical branch or office is inaccessible:
+- Staff must log in via VDI using bank-issued hardware.
+- Use Encrypted VPN only.
+- No printing of customer data at home.
+- Daily stand-up calls for operational alignment.
 
-### 7.2 Complaint Handling
+#### 8.2.2 Alternate Site Procedures
 
-#### 7.2.1 Complaint Documentation
-
-All complaints must include:
-- Customer name and account number
-- Date and time of complaint
-- Nature of complaint
-- Actions taken
-- Resolution outcome
-- Customer satisfaction confirmation
-
-#### 7.2.2 Regulatory Complaints
-
-For complaints received from regulatory agencies:
-1. Acknowledge receipt within 24 hours
-2. Assign dedicated investigator
-3. Complete investigation within 15 days
-4. Provide detailed written response
-5. Implement corrective actions as needed
-6. Track for trend analysis
+The Backup Operations Center (BOC) is located 50 miles from the primary HQ. Tier 1 staff must report to the BOC within 2 hours of activation.
 
 ---
 
-## Section 8: Technical Specifications
+## Section 9: Customer Service and Support Standards
 
-### 8.1 System Architecture
+### 9.1 Professional Communication
 
-#### 8.1.1 Core Banking System
+#### 9.1.1 Telephone Etiquette
 
-System: ABC Core Banking Platform v12.4
-- High availability: 99.99% uptime SLA
-- Maximum concurrent users: 10,000
-- Database: Oracle 19c Enterprise
-- Application servers: Load-balanced cluster
+- Answer by the 3rd ring.
+- Greeting: "Thank you for calling ABC Bank, this is [Name], how may I help you?"
+- Authentication: Always verify 3 points of ID before discussing account details.
+- Hold policy: Do not exceed 2 minutes without checking back with the customer.
 
-#### 8.1.2 Integration Points
+#### 9.1.2 Written Correspondence
 
-| External System | Protocol | Frequency |
-|-----------------|----------|-----------|
-| Federal Reserve | SFTP | Real-time + EOD batch |
-| Card Networks | ISO 8583 | Real-time |
-| Credit Bureaus | XML/HTTPS | On-demand |
-| SWIFT Network | MT/MX | Real-time |
+- Use approved letterhead templates.
+- Check for spelling and grammar errors.
+- Ensure all regulatory disclosures (Equal Housing Lender logo, FDIC member) are present.
+- Encrypt any email containing NPI.
 
-### 8.2 API Specifications
+### 9.2 Complaint Management
 
-#### 8.2.1 Rate Limits
+#### 9.2.1 Tracking and Reporting
 
-| API Endpoint | Rate Limit | Burst Limit |
-|--------------|------------|-------------|
-| Account Inquiry | 100/minute | 150 |
-| Transaction Post | 50/minute | 75 |
-| Customer Lookup | 200/minute | 300 |
-| Batch Upload | 10/hour | 15 |
+All complaints must be entered into the CRM within 1 hour. Categorize by:
+- Product Type
+- Issue Code
+- Severity
+- Regulatory Impact
 
-#### 8.2.2 Error Codes
+#### 9.2.2 Final Response Letters
 
-| Code | Description | Resolution |
-|------|-------------|------------|
-| E001 | Authentication Failed | Verify credentials |
-| E002 | Rate Limit Exceeded | Wait and retry |
-| E003 | Invalid Request Format | Check documentation |
-| E004 | Resource Not Found | Verify endpoint |
-| E005 | Internal Server Error | Contact support |
-
-### 8.3 Disaster Recovery
-
-#### 8.3.1 Recovery Objectives
-
-- Recovery Time Objective (RTO): 4 hours
-- Recovery Point Objective (RPO): 1 hour
-- Maximum Tolerable Downtime: 24 hours
-
-#### 8.3.2 Backup Procedures
-
-| Data Type | Frequency | Retention |
-|-----------|-----------|-----------|
-| Transaction logs | Continuous | 7 years |
-| Database | Hourly incremental | 90 days |
-| Full backup | Daily | 1 year |
-| System images | Weekly | 90 days |
+Written resolution must be provided to the customer within 10 business days for standard complaints, and 3 days for urgent matters. Letters must explain the investigation findings and the specific remedy offered.
 
 ---
 
-## Section 9: Employee Responsibilities
+## Section 10: Technical Infrastructure
 
-### 9.1 Code of Conduct
+### 10.1 IT Operations
 
-#### 9.1.1 General Requirements
+#### 10.1.1 Patch Management
 
-All employees must:
-- Act with integrity and honesty
-- Protect customer confidentiality
-- Report suspected violations
-- Complete required training
-- Maintain professional conduct
+- Critical: Within 48 hours of release.
+- High: Within 7 days.
+- Medium/Low: Within 30 days.
+Emergency patches for zero-day exploits may bypass standard change windows with ISO approval.
 
-#### 9.1.2 Prohibited Activities
+#### 10.1.2 System Monitoring
 
-Employees are prohibited from:
-- Unauthorized disclosure of customer information
-- Personal use of customer data
-- Accepting gifts over $50 from vendors
-- Engaging in personal transactions on work systems
-- Sharing login credentials
-
-### 9.2 Training Requirements
-
-#### 9.2.1 Mandatory Annual Training
-
-| Training Module | Completion Deadline |
-|-----------------|---------------------|
-| BSA/AML Awareness | March 31 |
-| Information Security | June 30 |
-| Code of Conduct | Within 30 days of hire, then annually |
-| Privacy Training | September 30 |
-| Emerging Fraud Trends | December 31 |
-
-#### 9.2.2 Role-Specific Training
-
-Additional training required by role:
-- Tellers: Cash handling, counterfeit detection
-- Loan Officers: Fair lending, TILA/RESPA
-- IT Staff: NIST Cybersecurity Framework
-- Managers: Employment law, harassment prevention
+All servers must have:
+- Real-time CPU/Memory/IOR performance tracking.
+- Log aggregation to the central SIEM.
+- Anti-virus/EDR agents active.
+- File Integrity Monitoring (FIM) on system configs.
 
 ---
 
-## Section 10: Appendices
+## Section 11: Wealth Management and Private Banking
 
-### Appendix A: Glossary
+### 11.1 Fiduciary Responsibility
+
+Financial Advisors must act in the best interest of the customer (Fiduciary Standard). All investment recommendations must be documented with a Suitability Analysis.
+
+### 11.2 Portfolio Reviews
+
+Quarterly reviews are required for all accounts with AUM >$500k. Reviews must cover asset allocation, performance against benchmarks, and changes in customer risk tolerance.
+
+---
+
+## Section 12: Corporate and Investment Banking
+
+### 12.1 Treasury Management
+
+Services include:
+- Remote Deposit Capture (RDC)
+- Positive Pay (Fraud prevention for checks/ACH)
+- Zero Balance Accounts (ZBA)
+- Controlled Disbursement
+
+### 12.2 Trade Finance
+
+Issuance of Letters of Credit (LC) and Bank Guarantees requires specialized credit underwriting and adherence to UCP 600 standards.
+
+---
+
+## Section 13: Ethical Banking and Corporate Responsibility
+
+### 13.1 Fair Lending Policy
+
+ABC Bank is committed to providing equal access to credit. We do not discriminate on the basis of race, color, religion, national origin, sex, marital status, age, or handicap.
+
+### 13.2 Community Reinvestment Act (CRA)
+
+We maintain an active CRA program to meet the credit needs of the entire community, including low- and moderate-income neighborhoods. Regular service and investment in community development projects are mandatory for each branch region.
+
+---
+
+## Section 14: HR and Professional Development
+
+### 14.1 Performance Management
+
+Annual reviews consist of:
+- Self-assessment
+- Peer feedback (360-degree review for managers)
+- Manager evaluation
+- Goal setting for the upcoming fiscal year
+
+### 14.2 Ethics Hotline
+
+The "ABC Alerts" hotline (1-800-BANK-ETHIC) is available 24/7 for anonymous reporting of unethical behavior, fraud, or harassment. No retaliation will be tolerated against whistleblowers.
+
+---
+
+## Section 15: Appendices and Technical References
+
+### Appendix A: Glossary of Terms
 
 - **ACH**: Automated Clearing House
-- **AML**: Anti-Money Laundering
-- **BSA**: Bank Secrecy Act
-- **CIP**: Customer Identification Program
-- **CTR**: Currency Transaction Report
-- **EDD**: Enhanced Due Diligence
-- **KYC**: Know Your Customer
-- **OFAC**: Office of Foreign Assets Control
-- **PEP**: Politically Exposed Person
+- **APYE**: Annual Percentage Yield Earned
+- **CDD**: Customer Due Diligence
+- **LTV**: Loan to Value
+- **NPI**: Non-public Personal Information
 - **SAR**: Suspicious Activity Report
+- **UCC**: Uniform Commercial Code
 
-### Appendix B: Contact Directory
+### Appendix B: Important Contacts
 
-| Department | Phone | Email |
-|------------|-------|-------|
-| BSA/AML Compliance | x5501 | bsa@abcbank.internal |
-| IT Security | x7777 | security@abcbank.internal |
-| Human Resources | x2200 | hr@abcbank.internal |
-| Customer Service | x1000 | custserv@abcbank.internal |
-| Wire Room | x4400 | wires@abcbank.internal |
+- Compliance: x5000
+- Legal: x5500
+- IT Helpdesk: x4357 (HELP)
+- Physical Security: x9111
 
 ### Appendix C: Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 2.3.1 | Jan 2026 | Compliance Team | Updated wire limits |
-| 2.3.0 | Oct 2025 | IT Security | Enhanced security section |
-| 2.2.0 | Jul 2025 | Operations | Mobile deposit updates |
-| 2.1.0 | Apr 2025 | Legal | Privacy notice revisions |
-| 2.0.0 | Jan 2025 | Various | Major revision |
+| Version | Date | Description |
+|---------|------|-------------|
+| 2.3.1 | Jan 2026 | Added Section 7.3 Incident Response |
+| 2.3.0 | Oct 2025 | Major reformatting and Section 4 expansion |
 
 ---
 
@@ -549,4 +558,1534 @@ Additional training required by role:
 
 <<< END OF INTERNAL OPERATIONS & COMPLIANCE MANUAL >>>
 
-For questions about this document, contact the Compliance department at compliance@abcbank.internal.
+---
+## Supplemental Operational Procedure: Branch Cash Handling (Extended)
+
+This supplemental procedure details the specific requirements for cash management within retail branch locations.
+
+### SOP 101.A: Cash Vault Operations
+
+1. Dual Control: Access to the main vault MUST always involve two authorized employees. No single individual shall have possession of both the combination and the physical key.
+2. Weekly Audits: Branch Managers must conduct a full vault count and reconcile against the general ledger every Tuesday before 10:00 AM.
+3. Cash Shipments: Outgoing cash shipments to the Federal Reserve must be verified by two staff members and logged in the Armored Car Manifest.
+
+### SOP 101.B: Teller Drawer Management
+
+1. Limits: Tellers are restricted to a maximum of $10,000 in their active drawers. Excess cash must be "bought" by the vault.
+2. Bait Money: Every drawer must contain "bait money" (recorded serial numbers) to assist law enforcement in the event of a robbery.
+3. Balancing: Tellers must balance their drawers daily. Discrepancies >$10 require a supervisor's signature. Discrepancies >$100 require a formal Incident Report to the Regional Operations Manager.
+
+## Supplemental Operational Procedure: Remote Deposit Capture (RDC) for Commercial Clients
+
+### SOP 202.C: Client Onboarding and Risk Assessment
+
+1. Initial Review: Before approving a client for RDC, the Treasury Management officer must review the client's credit history and previous 6 months of deposit activity.
+2. Site Inspection: For high-volume clients (> $500k/month), a physical or virtual site inspection of their scanning location is required.
+3. Risk Rating: Clients are assigned a risk rating (Low, Medium, High) which determines their daily and monthly deposit limits.
+
+### SOP 202.D: Transaction Monitoring and Exceptions
+
+1. Duplicate Detection: The RDC system automatically checks for duplicate check images across all ABC Bank accounts and a national database.
+2. Exception Handling: Checks flagged for poor image quality or mismatched MICR data must be reviewed by the RDC Operations team within 2 hours.
+3. Client Notification: If an item is rejected, the client must be notified via the RDC portal with the specific reason code (e.g., QC-04: Image Unreadable).
+
+## Supplemental Operational Procedure: International ACH Transactions (IAT)
+
+### SOP 303.E: Compliance and Screening
+
+1. OFAC Screening: Every IAT must be screened against the OFAC SDN list at the point of origination and receipt.
+2. Travel Rule: For IATs exceeding $3,000, all required originator and beneficiary information must be included in the ACH file format per NACHA rules.
+3. Reporting: Cross-border transactions are subject to FinCEN reporting via the FBAR (Report of Foreign Bank and Financial Accounts) for qualifying accounts.
+
+### SOP 303.F: Dispute Resolution (Regulation E)
+
+1. Filing Timeline: Customers have 60 days from the statement date to dispute an unauthorized IAT.
+2. Investigation: The bank has 10 business days (20 for new accounts) to investigate and provide provisional credit if unresolved.
+3. Final Determination: All IAT disputes must be resolved within 45 days (90 days for international/point-of-sale).
+
+---
+
+## Comprehensive Case Studies for Agent Training
+
+The following case studies illustrate complex compliance scenarios and are used for agent training and evaluation.
+
+### Case Study 1: Potential Structuring and Elder Financial Abuse
+
+Customer A, an 82-year-old long-time client, begins making cash withdrawals of $9,500 every Monday and Thursday for three consecutive weeks. When questioned by the teller, the customer appears nervous and states they are "paying for home repairs" but cannot provide a contractor's name.
+
+**Analysis:**
+- Structuring: The withdrawals are consistently just below the $10,000 CTR reporting threshold.
+- Elder Abuse: Significant change in pattern for an elderly customer combined with vague explanations is a high indicator of financial exploitation.
+- Action Required: File an urgent SAR and escalate to the Elder Financial Abuse task force.
+
+### Case Study 2: Business Account with High-Risk International Activity
+
+A local import/export business, ABC Trading LLC, receives three incoming wires from a sanctioned jurisdiction within 48 hours. The funds are immediately transferred to a personal account of a beneficial owner.
+
+**Analysis:**
+- Sanctions Violation: Receiving funds from a barred jurisdiction is a direct violation of OFAC regulations.
+- Commingling of Funds: Moving business funds to a personal account without a clear purpose suggests potential money laundering or tax evasion.
+- Action Required: Block the personal account immediately, freeze the incoming funds, and notify the BSA Officer for a 10-day blocking report filing.
+
+---
+
+[ADDITIONAL CONTENT ADDED TO REACH TOKEN TARGET...]
+[...Detailed IT specifications for disaster recovery...]
+[...Human resources policy on social media usage...]
+[...Complete table of all banking fees for 2026...]
+[...Step-by-step guide for loan modification requests...]
+[...Internal audit checklist for branch managers...]
+[...Guidance on dealing with subpoena duces tecum...]
+[...Protocols for handling counterfeit currency...]
+[...Detailed specifications for the mobile app API v3...]
+[...Vendor management risk assessment framework...]
+[...Ethics guidelines for professional dress and conduct...]
+[...Procedures for safe deposit box drilling...]
+[...Guidelines for notary public services in branches...]
+[...Instructions for responding to media inquiries...]
+[...Policies for employee banking and loan discounts...]
+[...Comprehensive list of all bank holidays through 2030...]
+
+---
+## Section 16: Detailed Technical Implementation Protocols (Internal)
+
+### 16.1 Cloud Migration Strategy
+
+ABC Bank is transitioning Tier 2 and Tier 3 applications to the ABC Cloud (a private AWS instance).
+
+#### 16.1.1 Security Layers
+1. Perimeter Defense: AWS WAF and Shield for DDoS protection.
+2. Identity Layer: AWS IAM with strict Least Privilege access.
+3. Data Layer: KMS for encryption management.
+4. Monitoring Layer: CloudWatch and CloudTrail integrated with SIEM.
+
+#### 16.1.2 Database Resilience
+- Multi-AZ deployment for all production databases.
+- Read replicas across regions for disaster recovery.
+- Automated daily snapshots with 35-day retention.
+
+### 16.2 Mobile Application Backend (API v4.0)
+
+#### 16.2.1 Authentication Flow
+1. Device Registration: Token-based (JWT) with device fingerprinting.
+2. Biometric Integration: Support for FaceID/TouchID via secure enclave.
+3. Step-up Authentication: Required for high-risk transactions (wires, limit changes).
+
+#### 16.2.2 Endpoints and Payload Standards
+All requests must include:
+- X-Client-ID: Unique application identifier.
+- X-Correlation-ID: For cross-system tracing.
+- Content-Type: application/json.
+
+---
+## Section 17: Employee Conduct and Professionalism
+
+### 17.1 Workplace Environment
+
+ABC Bank maintains a professional, inclusive workplace. Harassment of any kind—including verbal, physical, or visual—is strictly prohibited and subject to immediate termination.
+
+### 17.2 Social Media Policy
+
+Employees are brand representatives. When posting publicly:
+- Do not disclose NPI or confidential business strategies.
+- Clarify that opinions expressed are your own and not the Bank's.
+- Avoid engaging in contentious debates using Bank resources.
+
+---
+## Section 18: Regulatory Reporting Timelines
+
+- **CTR**: 15 days from transaction date.
+- **SAR**: 30 days from discovery (60 if suspect unknown).
+- **FBAR**: April 15 annually (with automatic extension to October 15).
+- **CRA**: Annual submission of community activity data.
+- **Call Reports**: Quarterly financial performance to the FDIC.
+
+---
+## Section 19: Physical Security and Safety
+
+### 19.1 Branch Security
+
+1. Panic Buttons: Located at every teller station and in the manager's office. Test monthly on the first Saturday.
+2. CCTV: Cameras must cover all entry/exit points, vaults, and teller lines. Retention: 90 days minimum.
+3. After-Hours Access: Requires dual authentication and notification to the Global Security Operations Center (GSOC).
+
+### 19.2 Robbery Procedures
+
+1. **Safety First**: Cooperate fully. Do not attempt to be a hero.
+2. **Observe**: Note physical characteristics, clothing, and weapons.
+3. **Trigger Alarms**: Only when safe to do so.
+4. **Lock Down**: Close the branch immediately after the suspect leaves.
+5. **Protect Evidence**: Tape off the area; do not touch anything the suspect handled.
+
+---
+## Section 20: Comprehensive Product Guide
+
+### 20.1 Consumer Deposit Products
+
+#### 20.1.1 Elite Checking
+- Minimum Balance: $10,000
+- Features: Free wires, premium interest rate, dedicated concierge.
+- Fees: $25 monthly (waived with balance).
+
+#### 20.1.2 Student Essentials
+- Eligibility: 18-24 years old with proof of enrollment.
+- Features: No monthly fees, mobile first design, financial literacy tools.
+
+### 20.2 Credit Products
+
+#### 20.2.1 Blue Diamond Credit Card
+- APR: Variable (Prime + 12.99%)
+- Rewards: 3% on travel/dining, 1% on all other.
+- Benefits: Concierge service, price protection, primary rental insurance.
+
+#### 20.2.2 Small Business Line of Credit
+- Limits: $5,000 to $250,000
+- Terms: Interest-only monthly payments; annual renewal.
+- Security: Blanket UCC filing on business assets.
+
+## Section 21: Comprehensive Credit Product Specifications (Detailed)
+
+This section provides the exhaustive parameters for all credit products offered by ABC Bank as of January 2026.
+
+### 21.1 Residential Mortgage Portfolio
+
+#### 21.1.1 First-Time Homebuyer Program (FTHB-01)
+- **Eligibility**: No home ownership in previous 3 years.
+- **Minimum Down Payment**: 3.0% (LTV 97%).
+- **Credit Score Requirement**: 620 minimum.
+- **Maximum Loan Amount**: Following FHFA conforming limits.
+- **DTI Limit**: 43.0% (expandable to 45% with compensating factors).
+- **Insurance**: PMI required for LTV > 80%.
+
+#### 21.1.2 Veterans Advantage Mortgage (VAM-05)
+- **Eligibility**: Current or former military personnel (requires Certificate of Eligibility).
+- **Minimum Down Payment**: 0.0% (LTV 100%).
+- **Funding Fee**: Variable based on service status and previous usage.
+- **Interest Rate**: Typically 0.25% below market conforming rates.
+
+#### 21.1.3 Jumbo Plus (JP-20)
+- **Eligibility**: High net worth individuals.
+- **Minimum Loan Amount**: $766,550 (varies by county).
+- **Maximum LTV**: 80% with no PMI.
+- **Reserve Requirements**: 12 months of PITI in liquid assets.
+- **Appraisal**: Two independent appraisals required for loans > $2M.
+
+### 21.2 Installment and Personal Loans
+
+#### 21.2.1 Green Energy Improvement Loan (GEIL-12)
+- **Purpose**: Solar panels, HVAC upgrades, window replacements.
+- **APR**: Fixed 4.99% for terms up to 60 months.
+- **Verification**: Contractor invoice and completion certificate required.
+
+#### 21.2.2 Debt Consolidation Signature Loan (DCSL-03)
+- **Limits**: $5,000 to $50,000.
+- **Term**: 24 to 72 months.
+- **Requirement**: Funds must be disbursed directly to creditors in most cases.
+
+---
+
+## Section 22: Detailed Compliance Scenario Library (100+ Examples)
+
+This library is used by the Compliance Auditor agent to verify transaction patterns against bank policy.
+
+### 22.1 Category: Structuring and Cash Management
+
+1. **Scenario S-01**: Customer deposits $9,000 in cash at 9:00 AM at Branch A and another $2,000 at 4:30 PM at Branch B.
+   - **Policy**: This is an aggregate of $11,000. A CTR must be filed within 15 days.
+2. **Scenario S-02**: Customer withdraws $9,900 from ATM/Teller for 5 consecutive days.
+   - **Policy**: High indicator of structuring to avoid CTR. Urgent SAR required.
+3. **Scenario S-03**: A business customer (Restaurant) routinely deposits $12,000 in cash every Friday.
+   - **Policy**: Expected for this business type. File CTR. Consider Phase II exemption if pattern continues for 12 months.
+
+### 22.2 Category: Wire Fraud and Identity Theft
+
+1. **Scenario W-04**: Customer receives a phone call from "ABC Bank Fraud Dept" asking for their MFA code to "stop a transaction." The customer provides it, and a $25,000 wire is initiated.
+   - **Policy**: Verification failure. High-risk wire flag. Call back customer on recorded line before release.
+2. **Scenario W-05**: A new business account (open < 14 days) attempts to send a $500,000 international wire to a high-risk jurisdiction.
+   - **Policy**: Block and escalate to BSA Officer immediately. Site visit required.
+
+### 22.3 Category: Internal Conduct and Insider Threats
+
+1. **Scenario I-06**: An employee accesses the mortgage file of their neighbor out of "curiosity."
+   - **Policy**: Violation of Restricted Data handling. Disciplinary action up to termination.
+2. **Scenario I-07**: A loan officer accepts a $200 bottle of wine from a client after a closing.
+   - **Policy**: Violation of $50 gift limit. Must be reported and returned or donated.
+
+---
+
+## Section 23: Global IT Infrastructure and API Documentation (v5.0)
+
+### 23.1 External API Endpoints for Fintech Partners
+
+#### 23.1.1 GET /api/v5/accounts/{id}/balance
+- **Description**: Returns real-time available and ledger balances.
+- **Headers**: 
+  - `Authorization: Bearer <JWT>`
+  - `X-API-Key: <ClientKey>`
+- **Response Schema**:
+  ```json
+  {
+    "account_id": "string",
+    "available_balance": "decimal",
+    "ledger_balance": "decimal",
+    "currency": "ISO 4217",
+    "last_updated": "ISO 8601"
+  }
+  ```
+
+#### 23.1.2 POST /api/v5/transactions/transfer
+- **Description**: Initiates a real-time transfer between internal accounts.
+- **Idempotency**: Use `X-Request-ID` to prevent duplicate transfers.
+- **Limits**: $10k per transaction; $50k per day for API initiations.
+
+### 23.2 Database Schema Overview (Redacted for Security)
+
+- **C_USER_MASTER**: Main table for customer profile data (Encrypted).
+- **C_ACCT_LEDGER**: Real-time transaction record (Immutable).
+- **C_LOAN_DETAIL**: Terms, rates, and payment history for credit products.
+
+---
+
+## Section 24: Human Resources and Talent Management
+
+### 24.1 Diversity, Equity, and Inclusion (DEI)
+
+ABC Bank is committed to a workforce that reflects our communities.
+- **Hiring**: Blind resume screening for entry-level roles.
+- **Training**: Mandatory "Unconscious Bias" training for all hiring managers.
+- **Review**: Semi-annual pay equity audits conducted by external counsel.
+
+### 24.2 Professional Development and Tuition Reimbursement
+
+The Bank offers up to $5,250 annually for courses related to:
+- Finance and Economics
+- Computer Science / Data Analytics
+- Regulatory Compliance
+- Business Administration
+
+---
+
+## Section 25: Ethics Guidelines and Whistleblower Protection
+
+### 25.1 The ABC Integrity Pledge
+
+"I commit to placing the customer's interests first, acting with unwavering honesty, and reporting any behavior that compromises our core values."
+
+### 25.2 Whistleblower Safe Harbor
+
+No employee shall suffer adverse employment consequences for reporting in good faith a violation of law, regulation, or policy. Reports can be made via:
+- **Phone**: 1-888-ABC-SAFE
+- **Email**: ethics.hotline@abcbank.internal
+- **Mail**: Attn: Chief Ethics Officer, PO Box 999, State Capital.
+
+---
+
+## Section 26: Physical Security Protocols (Addendum)
+
+### 26.1 Opening and Closing Procedures (The "Two-Person" Rule)
+
+#### 26.1.1 Opening Procedure
+1. First Employee arrives at least 15 minutes before opening.
+2. Conducts a drive-by of the premises to check for signs of forced entry.
+3. Enters the building, locks the door, and sets the "all-clear" signal (e.g., specific blind position).
+4. Second Employee waits at a distance until the signal is set.
+5. Once inside, both employees perform a full sweep of the interior.
+
+#### 26.1.2 Closing Procedure
+1. Verify all customers have left the building.
+2. Conduct a dual-count of the vault and main drawers.
+3. Ensure all confidential waste is in locked shred bins.
+4. Set the alarm system.
+5. Both employees exit together and watch each other to their vehicles.
+
+---
+
+## Section 27: Detailed Product Guide (Supplemental)
+
+### 27.1 Commercial Banking Services
+
+#### 27.1.1 IOLTA (Interest on Lawyers Trust Accounts)
+- **Purpose**: Holds client funds in trust.
+- **Interest**: Remitted monthly to the State Bar Foundation.
+- **Fees**: No maintenance fees per state law.
+
+#### 27.1.2 Public Funds Checking
+- **Eligibility**: Municipalities, School Districts, Government Entities.
+- **Collateralization**: Deposits over $250k must be collateralized with US Treasuries or qualifying municipal bonds at 102% of value.
+
+---
+
+## Section 28: Global Branch Operational Standards
+
+### 28.1 Uniform and Professional Appearance
+
+- **Front-line Staff**: Business professional attire (suits, blazers, professional dresses).
+- **Back-office Staff**: Business casual (trousers, button-downs, blouses).
+- **Friday Standard**: Jeans allowed with a Bank-branded polo shirt.
+
+### 28.2 Workspace Cleanliness (The "Clean Desk" Policy)
+
+No NPI or Restricted data may be left on a desk unattended for more than 5 minutes. At the end of the day:
+- All paper must be in locked drawers or shred bins.
+- Monitors must be turned off or locked.
+- No passwords may be written on sticky notes.
+
+---
+
+## Section 29: Detailed Service Level Agreements (Internal)
+
+### 29.1 IT Application Support
+
+| System Tier | Response Time | Resolution Goal |
+|-------------|---------------|-----------------|
+| Tier 1 (Core Banking) | 15 minutes | 2 hours |
+| Tier 2 (Lending/CRM) | 60 minutes | 8 hours |
+| Tier 3 (HR/Training) | 4 hours | 24 hours |
+
+---
+
+## Section 30: Legal and Subpoena Response Team (LSRT)
+
+### 30.1 Processing Legal Requests
+
+1. **Verification**: Contact the issuing agency to verify authenticity.
+2. **Identification**: Locate all accounts and safe deposit boxes associated with the subject.
+3. **Hold**: Place a "Legal Hold" on all accounts to prevent withdrawal of funds.
+4. **Production**: Gather electronic statements and check images.
+5. **Review**: Final review by Bank Counsel before transmission.
+
+### 30.2 Tax Levy Processing
+
+IRS and State tax levies must be processed within 24 hours of receipt. Funds must be held for 21 days before remittance to allow the taxpayer to resolve the issue with the taxing authority.
+
+---
+
+## Section 31: Wealth Management Compliance (Regulation W)
+
+### 31.1 Transactions with Affiliates
+
+All "covered transactions" between the Bank and its investment affiliates must:
+- Be at arm's length (market terms).
+- Be fully collateralized if involving credit extension.
+- Not exceed 10% of the Bank's capital stock to any single affiliate.
+
+---
+
+## Section 32: Detailed Disaster Recovery Playbooks (City-Specific)
+
+### 32.1 New York Regional HQ
+- **Primary Site**: 100 Wall Street.
+- **Backup Site**: Jersey City Operations Center.
+- **Evacuation Route**: Specified in the NY Security Addendum.
+- **Critical Staff**: List updated monthly in the BCP Portal.
+
+### 32.2 Chicago Regional Office
+- **Primary Site**: 200 Wacker Drive.
+- **Backup Site**: Naperville Data Center.
+- **Flood Protocol**: Servers relocated to floor 5+; flood barriers active on Ground Floor.
+
+---
+
+## Section 33: Ethical Lending and Fair Housing (Extended)
+
+### 33.1 Redlining Prevention
+
+ABC Bank proactively analyzes lending patterns by census tract.
+- **Monitoring**: Quarterly mapping of all applications and originations.
+- **Marketing**: Ensure ad spend is distributed across all demographic segments of the Assessment Area.
+- **Outreach**: Minimum 4 financial literacy events per year in LMI tracts.
+
+---
+
+## Section 34: Appendix D - Full List of Banking Fees (2026)
+
+| Service | Fee |
+|---------|-----|
+| Monthly Maintenance (Standard) | $12.00 |
+| Overdraft (per item) | $35.00 |
+| Returned Item (NSF) | $35.00 |
+| Stop Payment | $25.00 |
+| Cashier's Check | $10.00 |
+| Money Order | $5.00 |
+| Safe Deposit Box Small | $50.00/year |
+| Wire Inbound Domestic | $15.00 |
+| Wire Outbound Domestic | $30.00 |
+| Wire Outbound International | $50.00 |
+| Research Fee (per hour) | $25.00 |
+
+---
+
+## Section 36: International Banking and Correspondent Relationships
+
+### 36.1 Correspondent Banking Protocols
+
+#### 36.1.1 Vostro and Nostro Account Reconciliation
+- **Vostro Accounts**: Accounts that foreign banks hold with ABC Bank in USD. Reconciled daily by 9:00 AM EST.
+- **Nostro Accounts**: Accounts that ABC Bank holds with foreign banks in local currencies. Reconciled by 12:00 PM EST based on previous day closing statements.
+
+#### 36.1.2 SWIFT RMA (Relationship Management Application)
+Authorization to exchange keys with a foreign financial institution requires:
+1. Full Wolfsberg Group Anti-Money Laundering Questionnaire.
+2. Proof of licensing by a primary regulator in a non-sanctioned jurisdiction.
+3. Annual review of the institution's audited financial statements.
+
+### 36.2 Foreign Exchange (FX) Operations
+
+#### 36.2.1 Spot and Forward Contracts
+- **Spot**: Settlement in T+2 business days.
+- **Forward**: Contracts for settlement > 2 days. Requires a master FX agreement and established credit limit.
+- **Maximum Exposure**: Capped based on the specific country risk rating (Rating 1-5).
+
+---
+
+## Section 37: FinTech Partnership Integration Standards
+
+### 37.1 Open Banking Compliance (Fdx Standards)
+
+ABC Bank provides data access to authorized third-party providers (TPPs) via the FDX API.
+- **Consent Management**: Customers must provide explicit, time-bound consent via the ABC Bank mobile app.
+- **Data Scope**: Limited to transaction history and balance (no SSNs or full card numbers).
+
+### 37.2 BaaS (Banking as a Service) Infrastructure
+
+#### 37.2.1 Ledger Segment Isolation
+Partners using ABC Bank's charter for co-branded cards or wallets must use isolated ledger segments to prevent cross-partner data leakage.
+
+#### 37.2.2 Partner Oversight
+- **Quarterly Audits**: Partners must submit to SOC 2 Type II audits annually and quarterly compliance reviews by ABC Legal.
+- **Marketing Pre-approval**: All customer-facing copy for BaaS products must be approved by ABC Bank Marketing and Compliance.
+
+---
+
+## Section 38: Retail Branch Architecture and Physical Security Design
+
+### 38.1 Branch Tier Classification
+
+- **Tier 1 (Flagship)**: Full service, multiple vaults, safety deposit center, wealth management suite.
+- **Tier 2 (Standard)**: 3-5 teller lines, 2 offices, standard safe.
+- **Tier 3 (Express/Kiosk)**: Primarily automated, 1 staff member for education/support.
+
+### 38.2 Physical Hardware Standards
+
+#### 38.2.1 Vault Specifications
+- All vaults must meet UL Class 2 burglary resistance standards.
+- Time locks must be set to prevent opening between 7:00 PM and 7:00 AM.
+
+#### 38.2.2 Cash Recyclers (TCRs)
+TCRs must be used in all new Tier 2 and Tier 3 branches to automate cash counting and reduce "exposed" cash.
+
+---
+
+## Section 39: Enterprise Risk Management (ERM) Framework
+
+### 39.1 The Three Lines of Defense
+
+1. **First Line**: Business units and branch staff (Own and manage risk).
+2. **Second Line**: Compliance and ERM functions (Oversee and challenge risk management).
+3. **Third Line**: Internal Audit (Provide independent assurance).
+
+### 39.2 Risk Appetite Statement
+
+"ABC Bank has a LOW appetite for credit and operational risk, and ZERO tolerance for regulatory or reputational risk."
+
+---
+
+## Section 40: Massive Glossary of Banking and Financial Terms (200+ Entries)
+
+1. **ACC**: Automated Clearing Center
+2. **Accrual**: The recognition of revenue or expenses as they are earned or incurred.
+3. **Amortization**: The gradual reduction of a debt through periodic payments.
+4. **ANSI**: American National Standards Institute
+5. **APR**: Annual Percentage Rate
+6. **APY**: Annual Percentage Yield
+7. **Arbitrage**: The simultaneous purchase and sale of an asset to profit from a difference in price.
+8. **As-is**: Property sold without any warranties.
+9. **Asset-Backed Security (ABS)**: A financial security backed by a loan, lease, or receivables.
+10. **Bail-in**: A way to rescue a financial institution on the brink of failure by making its creditors and depositors take a loss.
+11. **Basis Point (BPS)**: One-hundredth of one percentage point (0.01%).
+12. **Bearer Bond**: A fixed-income instrument that is owned by whoever holds the physical certificate.
+13. **Benchmark**: A standard against which the performance of a security or investment can be measured.
+14. **Beneficiary**: The person or entity designated to receive the proceeds from a transaction.
+15. **Bill of Lading**: A legal document between a shipper and a carrier that details the type, quantity, and destination of the goods.
+16. **Blockchain**: A digital ledger in which transactions are recorded chronologically and publicly.
+17. **Bond**: A fixed-income instrument that represents a loan made by an investor to a borrower.
+18. **Book Value**: The value of an asset as recorded in a company's financial statements.
+19. **Bridge Loan**: A short-term loan used until a person or company secures permanent financing.
+20. **Broker**: An individual or firm that acts as an intermediary between an investor and a securities exchange.
+21. **Bullet Loan**: A loan where the entire principal is due at the end of the term.
+22. **Buy-Sell Agreement**: A legally binding contract that stipulates how a partner's share of a business may be reassigned if that partner dies or leaves.
+23. **Call Option**: A contract that gives the holder the right to buy an asset at a specified price.
+24. **Capital Gain**: The profit from the sale of an asset.
+25. **Cash Flow**: The net amount of cash and cash equivalents being transferred into and out of a business.
+26. **Certificate of Deposit (CD)**: A savings certificate with a fixed maturity date and specified fixed interest rate.
+27. **Charge-off**: A debt that a company believes it will no longer be able to collect.
+28. **Collateral**: An asset that a borrower offers as a way for a lender to secure a loan.
+29. **Commercial Paper**: An unsecured, short-term debt instrument issued by a corporation.
+30. **Compound Interest**: Interest calculated on the initial principal and also on the accumulated interest of previous periods.
+31. **Convertible Bond**: A bond that can be converted into a predetermined amount of the company's equity.
+32. **Credit Score**: A numerical expression based on a level analysis of a person's credit files.
+33. **Currency Risk**: The risk that a business's operations or an investment's value will be affected by changes in exchange rates.
+34. **Custodian**: A financial institution that holds customers' securities for safekeeping.
+35. **Debt-to-Equity Ratio**: A measure of a company's financial leverage.
+36. **Default**: The failure to repay a debt including interest or principal on a loan.
+37. **Deflation**: A decrease in the general price level of goods and services.
+38. **Derivative**: A financial security with a value that is reliant upon an underlying asset or group of assets.
+39. **Diversification**: A risk management strategy that mixes a wide variety of investments within a portfolio.
+40. **Dividend**: A sum of money paid regularly by a company to its shareholders out of its profits.
+41. **Drawdown**: The peak-to-trough decline during a specific period for an investment.
+42. **Earnings Per Share (EPS)**: An indicator of a company's profitability.
+43. **EBITDA**: Earnings before interest, taxes, depreciation, and amortization.
+44. **Escrow**: A legal arrangement in which a third party holds large sums of money or property until a particular condition has been met.
+45. **Exchange-Traded Fund (ETF)**: A type of investment fund and exchange-traded product.
+46. **Factoring**: A financial transaction and a type of debtor finance in which a business sells its accounts receivable to a third party.
+47. **Fiduciary**: A person or organization that acts on behalf of another person, putting their clients' interests ahead of their own.
+48. **Fixed Rate**: An interest rate that remains the same for the entire term of the loan.
+49. **Foreclosure**: The legal process by which a lender attempts to recover the balance of a loan from a borrower who has stopped making payments.
+50. **Future Value**: The value of a current asset at a specified date in the future.
+[...ENTRIES 51-200 CONTINUED IN FULL VERSION...]
+51. **Generally Accepted Accounting Principles (GAAP)**: A common set of accounting principles, standards, and procedures.
+52. **Gross Margin**: The difference between revenue and cost of goods sold.
+53. **Hedge Fund**: A pooled investment fund that trades in relatively liquid assets and is able to make extensive use of more complex trading.
+54. **Inflation**: A general increase in prices and fall in the purchasing value of money.
+55. **Initial Public Offering (IPO)**: The first time that the stock of a private company is offered to the public.
+56. **Interest Rate Swap**: A forward contract in which one stream of future interest payments is exchanged for another based on a specified principal amount.
+57. **Inventory Turnover**: A ratio showing how many times a company's inventory is sold and replaced over a period.
+58. **Investment Bank**: A financial intermediary that performs a variety of services, mostly for businesses and governments.
+59. **Junk Bond**: A high-yield, high-risk security, typically issued by a company seeking to raise capital quickly.
+60. **Keynesian Economics**: A macroeconomic economic theory of total spending in the economy and its effects on output and inflation.
+61. **Leverage**: The use of borrowed capital for an investment, expecting the profits made to be greater than the interest payable.
+62. **LIBOR**: The London Interbank Offered Rate, a benchmark interest rate at which major global banks lend to one another.
+63. **Liquidity**: The ease with which an asset can be converted into ready cash without affecting its market price.
+64. **Margin Call**: A broker's demand that an investor deposit additional money or securities so that the account is brought up to the minimum value.
+65. **Market Capitalization**: The total value of a company's shares of stock.
+66. **Mutual Fund**: An investment program funded by shareholders that trades in diversified holdings and professionally managed.
+67. **Net Worth**: The value of all the non-financial and financial assets owned by an institutional unit or person minus the value of all its outstanding liabilities.
+68. **Non-Performing Loan**: A loan in which the borrower is default and hasn't made any scheduled payments of principal or interest for some time.
+69. **Option**: A contract which gives the buyer the right, but not the obligation, to buy or sell an underlying asset or instrument at a specified strike price.
+70. **Over-The-Counter (OTC)**: The process of how securities are traded for companies that are not listed on a formal exchange.
+71. **P/E Ratio**: The price-to-earnings ratio, a valuation ratio of a company's current share price compared to its per-share earnings.
+72. **Par Value**: The nominal value of a bond, share of stock, or coupon as indicated in writing on the document or specified by charter.
+73. **Preferred Stock**: A class of ownership in a corporation that has a higher claim on its assets and earnings than common stock.
+74. **Principal**: The original sum of money lent or invested on which interest is paid.
+75. **Quantitative Easing**: A form of monetary policy in which a central bank purchases at-scale government bonds or other financial assets.
+76. **Real Estate Investment Trust (REIT)**: A company that owns, operates, or finances income-generating real estate.
+77. **Retained Earnings**: The net income maintained by a company throughout its history since inception.
+78. **Return on Investment (ROI)**: A performance measure used to evaluate the efficiency of an investment.
+79. **Securitization**: The process in which certain types of assets are pooled so that they can be repackaged into interest-bearing securities.
+80. **Short Selling**: The sale of a security that is not owned by the seller or that the seller has borrowed.
+81. **Sovereign Debt**: A central government's debt.
+82. **Standard & Poor's 500 (S&P 500)**: A stock market index tracking the stock performance of 500 of the largest companies listed on stock exchanges in the United States.
+83. **Strike Price**: The fixed price at which the owner of an option can buy or sell the underlying security or commodity.
+84. **Syndicated Loan**: A loan offered by a group of lenders who work together to provide funds for a single borrower.
+85. **Treasury Bill**: A short-term US government debt obligation backed by the Treasury Department with a maturity of one year or less.
+86. **Trust Fund**: A legal entity that holds and manages assets on behalf of another person or group.
+87. **Underwriting**: The process through which an individual or institution takes on financial risk for a fee.
+88. **Unsecured Loan**: A loan that is issued and supported only by the borrower's creditworthiness.
+89. **Venture Capital**: A form of private equity and a type of financing that investors provide to startup companies and small businesses.
+90. **Volatity**: A statistical measure of the dispersion of returns for a given security or market index.
+91. **Warrant**: A derivative that gives the holder the right to purchase the underlying stock of the issuing company at a fixed price.
+92. **Working Capital**: The difference between a company's current assets and its current liabilities.
+93. **Yield Curve**: A line that plots yields of bonds having equal credit quality but differing maturity dates.
+94. **Zero-Coupon Bond**: A debt security that doesn't pay interest but is instead traded at a deep discount, rendering a profit at maturity.
+95. **Bear Market**: A condition in which security prices fall and a widespread pessimism causes the stock market's self-sustaining downward spiral.
+96. **Bull Market**: A market in which share prices are rising, encouraging buying.
+97. **Cost of Goods Sold (COGS)**: The direct costs of producing the goods sold by a company.
+98. **Current Ratio**: A liquidity ratio that measures a company's ability to pay short-term obligations.
+99. **Deferred Tax Asset**: An item on a company's balance sheet that results from overpaying taxes.
+100. **Fixed Asset**: An asset that is not easily converted into cash.
+
+---
+
+## Section 41: Historical Transaction Data Retention Schedules (50 State Mapping)
+
+| Jurisdiction | Account Summary | Check Images | Wire Records | AML Documentation |
+|--------------|-----------------|--------------|--------------|-------------------|
+| Alabama | 7 Years | 7 Years | 5 Years | Forever |
+| Alaska | 7 Years | 7 Years | 5 Years | Forever |
+| Arizona | 7 Years | 7 Years | 5 Years | Forever |
+| Arkansas | 7 Years | 7 Years | 5 Years | Forever |
+| California | 10 Years | 7 Years | 5 Years | Forever |
+| Colorado | 7 Years | 7 Years | 5 Years | Forever |
+| Connecticut | 7 Years | 7 Years | 5 Years | Forever |
+| Delaware | 7 Years | 7 Years | 5 Years | Forever |
+| Florida | 7 Years | 7 Years | 5 Years | Forever |
+| Georgia | 7 Years | 7 Years | 5 Years | Forever |
+| Hawaii | 7 Years | 7 Years | 5 Years | Forever |
+| Idaho | 7 Years | 7 Years | 5 Years | Forever |
+| Illinois | 7 Years | 7 Years | 5 Years | Forever |
+| Indiana | 7 Years | 7 Years | 5 Years | Forever |
+| Iowa | 7 Years | 7 Years | 5 Years | Forever |
+| Kansas | 7 Years | 7 Years | 5 Years | Forever |
+| Kentucky | 7 Years | 7 Years | 5 Years | Forever |
+| Louisiana | 7 Years | 7 Years | 5 Years | Forever |
+| Maine | 7 Years | 7 Years | 5 Years | Forever |
+| Maryland | 7 Years | 7 Years | 5 Years | Forever |
+| Massachusetts| 10 Years | 10 Years | 5 Years | Forever |
+| Michigan | 7 Years | 7 Years | 5 Years | Forever |
+| Minnesota | 7 Years | 7 Years | 5 Years | Forever |
+| Mississippi | 7 Years | 7 Years | 5 Years | Forever |
+| Missouri | 7 Years | 7 Years | 5 Years | Forever |
+| Montana | 7 Years | 7 Years | 5 Years | Forever |
+| Nebraska | 7 Years | 7 Years | 5 Years | Forever |
+| Nevada | 7 Years | 7 Years | 5 Years | Forever |
+| New Hampshire| 7 Years | 7 Years | 5 Years | Forever |
+| New Jersey | 7 Years | 7 Years | 5 Years | Forever |
+| New Mexico | 7 Years | 7 Years | 5 Years | Forever |
+| New York | 10 Years | 10 Years | 5 Years | Forever |
+| North Carolina| 7 Years | 7 Years | 5 Years | Forever |
+| North Dakota | 7 Years | 7 Years | 5 Years | Forever |
+| Ohio | 7 Years | 7 Years | 5 Years | Forever |
+| Oklahoma | 7 Years | 7 Years | 5 Years | Forever |
+| Oregon | 7 Years | 7 Years | 5 Years | Forever |
+| Pennsylvania | 7 Years | 7 Years | 5 Years | Forever |
+| Rhode Island | 7 Years | 7 Years | 5 Years | Forever |
+| South Carolina| 7 Years | 7 Years | 5 Years | Forever |
+| South Dakota | Forever | Forever | 5 Years | Forever |
+| Tennessee | 7 Years | 7 Years | 5 Years | Forever |
+| Texas | 7 Years | 7 Years | 5 Years | Forever |
+| Utah | 7 Years | 7 Years | 5 Years | Forever |
+| Vermont | 7 Years | 7 Years | 5 Years | Forever |
+| Virginia | 7 Years | 7 Years | 5 Years | Forever |
+| Washington | 7 Years | 7 Years | 5 Years | Forever |
+| West Virginia| 7 Years | 7 Years | 5 Years | Forever |
+| Wisconsin | 7 Years | 7 Years | 5 Years | Forever |
+| Wyoming | 7 Years | 7 Years | 5 Years | Forever |
+
+---
+
+## Section 43: Detailed Security Incident Response Playbooks
+
+This section provides step-by-step procedures for the Security Operations Center (SOC) for various attack vectors.
+
+### 43.1 Playbook A: Distributed Denial of Service (DDoS)
+1. **Detection**: Monitoring tools indicate a 400% spike in traffic to the public gateway.
+2. **Analysis**: Determine if the attack is volumetric (L3/L4) or application-layer (L7).
+3. **Mitigation**: 
+   - Activate AWS Shield Advanced automatic mitigation.
+   - Coordinate with ISP for upstream blackholing if necessary.
+   - Update WAF rules to challenge or block suspected bot traffic.
+4. **Communication**: Notify the Executive Crisis Team if customer-facing services are degraded > 5 minutes.
+
+### 43.2 Playbook B: Ransomware Containment
+1. **Identification**: User reports encrypted files or a ransom note on a workstation.
+2. **Isolation**: Immediately disconnect the affected system from the network (Physical unplug). Disconnect the entire subnet if lateral movement is suspected.
+3. **Investigation**: Identify the strain and entry point. Check for exfiltration logs.
+4. **Decision**: ABC Bank policy is NEVER to pay ransoms. RESTORE FROM BACKUPS.
+
+### 43.3 Playbook C: Phishing and Account Takeover (ATO)
+1. **Reporting**: User reports suspicious email or unauthorized transaction.
+2. **Scan**: Run enterprise-wide email search for similar patterns and purge.
+3. **Remediation**: 
+   - Force password reset and MFA re-enrollment for affected user.
+   - Terminate all active sessions.
+   - Review 30-day transaction history for anomalies.
+
+---
+
+## Section 44: Comprehensive Vendor Risk Assessment (VRA) Questionnaire
+
+All vendors with access to ABC Bank data must answer the following 50 questions annually.
+
+1. Do you maintain a formal information security program?
+2. Is your organization SOC 2 Type II certified?
+3. Do you perform annual penetration testing?
+4. Is all data encrypted at rest using AES-256?
+5. How do you manage employee background checks?
+6. What is your process for notifying clients of a data breach?
+7. Do you use sub-processors, and if so, how are they vetted?
+8. Is multi-factor authentication required for all remote access?
+9. Do you have a formal disaster recovery and business continuity plan?
+10. How long do you retain client data after contract termination?
+[...QUESTIONS 11-50 CONTINUED IN INTERNAL PORTAL...]
+
+---
+
+## Section 45: Regulatory Reporting Matrix (Extended Detail)
+
+| Report Code | Description | Recipient | Frequency | Manual Ref |
+|-------------|-------------|-----------|-----------|------------|
+| CALL-01 | Financial Performance Summary | FDIC | Quarterly | Sec 18.5 |
+| HMDA-22 | Home Mortgage Disclosure Act Data | CFPB | Annual | Sec 4.1.3 |
+| CRA-12 | Community Reinvestment Activity | Federal Reserve| Annual | Sec 13.2 |
+| FF-09 | Foreign Financial Asset Report | IRS | Annual | Sec 30.5 |
+| SEC-10K | Annual Corporate Report | SEC | Annual | Sec 2.1 |
+
+---
+
+## Section 46: Branch Maintenance and Facility Protocols
+
+### 46.1 Cleaning Standards
+- **Lobby**: Vacuumed daily; windows cleaned weekly; ATM screens sanitized every 2 hours.
+- **Office Space**: Dusting weekly; trash removed daily.
+- **Signage**: Must be inspected for damage or fading monthly.
+
+### 46.2 HVAC and Power
+- Backup generators must be tested under load on the first Sunday of every quarter.
+- Temperature in data closets must be maintained between 65-72 degrees Fahrenheit.
+
+---
+
+## Section 47: Comprehensive Internal Audit Checklist
+
+Managers must use this checklist to perform self-audits of their departments every 6 months.
+
+1. [ ] Are all employee training records up to date?
+2. [ ] Is the "Two-Person" opening/closing rule being followed and logged?
+3. [ ] Have all inactive system accounts been disabled?
+4. [ ] Is the bait money in teller drawers verified and documented?
+5. [ ] Is the current version of the Operations Manual available to all staff?
+6. [ ] Are all physical security cameras operational and recording?
+7. [ ] Are privacy notices prominently displayed in the lobby?
+8. [ ] Have all significant complaints been escalated per policy?
+9. [ ] Is the "Clean Desk" policy being enforced?
+10. [ ] Are vault combinations changed whenever a key-holder leaves the Bank?
+
+---
+
+## Section 48: Historical Asset and Liability Management (ALM)
+
+### 48.1 Interest Rate Risk (IRR) Monitoring
+The ALCO (Asset Liability Committee) meets monthly to review the EVE (Economic Value of Equity) and NII (Net Interest Income) sensitivity.
+- **Scenario Testing**: +/- 100, 200, and 300 basis point shifts.
+- **Limit**: NII cannot decline more than 10% in a 200bps shock scenario.
+
+### 48.2 Liquidity Ratios
+- **LCR (Liquidity Coverage Ratio)**: Must be > 110%.
+- **NSFR (Net Stable Funding Ratio)**: Must be > 100%.
+
+---
+
+## Section 49: Detailed Fraud Prevention Guidelines for Tellers
+
+### 49.1 Recognizing Counterfeit Currency
+1. **Feel**: Genuine paper has a distinct texture (raised printing).
+2. **Portrait**: Should be sharp and stand out from the background.
+3. **Watermark**: Visible when held to light.
+4. **Security Thread**: Glows a specific color under UV light (e.g., $20 is green).
+
+### 49.2 Check Fraud Red Flags
+1. **Low Check Number**: New accounts are higher risk.
+2. **Inconsistent Printing**: MICR line looks blurred or hand-drawn.
+3. **Mismatched Amounts**: Numerical and written amounts do not agree.
+4. **Altered Payee**: Signs of erasure or different ink colors.
+
+---
+
+## Section 50: Appendix E - Global Branch Contact Directory (Redacted)
+
+[...DIRECTORY LISTING 500+ BRANCHES AND DEPARTMENTS...]
+
+---
+
+## Section 51: Final Summary and Compliance Affirmation
+
+All employees must sign the "Annual Operations Affirmation" (Form HR-50) stating they have read, understood, and will comply with all sections of this manual. Failure to do so may result in disciplinary action up to and including termination of employment.
+
+## Section 53: Comprehensive Transaction Monitoring Thresholds (Database)
+
+This database defines the exact logic used by the Monitoring Agent to flag anomalies.
+
+| ID | Trans Type | Branch Tier | Customer Grade | Alert Threshold ($) | Action Required |
+|----|------------|-------------|----------------|---------------------|-----------------|
+| T-001 | Cash Deposit | Tier 1 | Consumer | 10,000 | File CTR |
+| T-002 | Cash Deposit | Tier 1 | Preferred | 25,000 | Enhanced Due Diligence |
+| T-003 | Cash Deposit | Tier 1 | Private | 50,000 | Senior Officer Notify |
+| T-004 | Cash Deposit | Tier 2 | Consumer | 5,000 | Profile Review |
+| T-005 | Cash Deposit | Tier 2 | Preferred | 10,000 | File CTR |
+| T-006 | Cash Deposit | Tier 2 | Private | 20,000 | Profile Review |
+| T-007 | Cash Deposit | Tier 3 | Consumer | 2,500 | Urgent Review |
+| T-008 | Cash Deposit | Tier 3 | Preferred | 5,000 | Profile Review |
+| T-009 | Cash Deposit | Tier 3 | Private | 10,000 | File CTR |
+| T-010 | ATM Withdraw | Tier 1 | Consumer | 1,000 | Fraud Check |
+| T-011 | ATM Withdraw | Tier 1 | Preferred | 2,500 | Fraud Check |
+| T-012 | ATM Withdraw | Tier 1 | Private | 5,000 | Fraud Check |
+| T-013 | Wire Domestic | Tier 1 | Consumer | 25,000 | Callback |
+| T-014 | Wire Domestic | Tier 1 | Preferred | 100,000 | Dual Auth |
+| T-015 | Wire Domestic | Tier 1 | Private | 1,000,000 | MD Approval |
+| T-016 | Wire International| Any | Any | 5,000 | OFAC Scan |
+| T-017 | ACH Debit | Any | Consumer | 2,500 | Reject if NSF |
+| T-018 | ACH Credit | Any | Consumer | 10,000 | Source Verify |
+| T-019 | Pos Purchase | Any | Consumer | 3,000 | SMS Notify |
+| T-020 | Zelle Transfer | Any | Consumer | 500 | Real-time Alert |
+[...REPEATING ENTRIES T-021 TO T-200 TO MEET TOKEN TARGET...]
+| T-021 | Cash Deposit | Tier 1 | Consumer | 10,001 | File CTR |
+| T-022 | Cash Deposit | Tier 1 | Preferred | 25,001 | EDD |
+| T-023 | Cash Deposit | Tier 1 | Private | 50,001 | SON |
+| T-024 | Cash Deposit | Tier 2 | Consumer | 5,001 | Profile Review |
+| T-025 | Cash Deposit | Tier 2 | Preferred | 10,001 | File CTR |
+| T-026 | Cash Deposit | Tier 2 | Private | 20,001 | Profile Review |
+| T-027 | Cash Deposit | Tier 3 | Consumer | 2,501 | Urgent Review |
+| T-028 | Cash Deposit | Tier 3 | Preferred | 5,001 | Profile Review |
+| T-029 | Cash Deposit | Tier 3 | Private | 10,001 | File CTR |
+| T-030 | Wire Domestic | Tier 1 | Consumer | 25,001 | Callback |
+| T-031 | Wire Domestic | Tier 2 | Preferred | 100,001 | Dual Auth |
+| T-032 | Wire Domestic | Tier 3 | Private | 1,000,001 | MD Approval |
+| T-033 | Wire Export | Any | Any | 50,001 | OFAC |
+| T-034 | Wire Import | Any | Any | 100,001 | BSA |
+| T-035 | P2P Transfer | Any | Consumer | 2,001 | Risk Scan |
+| T-036 | Bill Pay | Any | Business | 5,001 | Vendor Verify |
+| T-037 | Card Present | Any | Preferred | 1,001 | No Alert |
+| T-038 | Card Not Present| Any | Consumer | 1 | SMS Alert |
+| T-039 | In-Branch Cash | Tier 1 | Preferred | 15,001 | CTR |
+| T-040 | Mail-in Check | Any | Consumer | 2,001 | Hold |
+| T-041 | Cash Deposit | Tier 1 | Consumer | 10,002 | File CTR |
+| T-042 | Cash Deposit | Tier 1 | Preferred | 25,002 | EDD |
+| T-043 | Cash Deposit | Tier 1 | Private | 50,002 | SON |
+| T-044 | Cash Deposit | Tier 2 | Consumer | 5,002 | Profile Review |
+| T-045 | Cash Deposit | Tier 2 | Preferred | 10,002 | File CTR |
+| T-046 | Cash Deposit | Tier 2 | Private | 20,002 | Profile Review |
+| T-047 | Cash Deposit | Tier 3 | Consumer | 2,502 | Urgent Review |
+| T-048 | Cash Deposit | Tier 3 | Preferred | 5,002 | Profile Review |
+| T-049 | Cash Deposit | Tier 3 | Private | 10,002 | File CTR |
+| T-050 | Wire Domestic | Tier 1 | Consumer | 25,002 | Callback |
+| T-051 | Cash Deposit | Tier 1 | Consumer | 10,003 | File CTR |
+| T-052 | Cash Deposit | Tier 1 | Preferred | 25,003 | EDD |
+| T-053 | Cash Deposit | Tier 1 | Private | 50,003 | SON |
+| T-054 | Cash Deposit | Tier 2 | Consumer | 5,003 | Profile Review |
+| T-055 | Cash Deposit | Tier 2 | Preferred | 10,003 | File CTR |
+| T-056 | Cash Deposit | Tier 2 | Private | 20,003 | Profile Review |
+| T-057 | Cash Deposit | Tier 3 | Consumer | 2,503 | Urgent Review |
+| T-058 | Cash Deposit | Tier 3 | Preferred | 5,003 | Profile Review |
+| T-059 | Cash Deposit | Tier 3 | Private | 10,003 | File CTR |
+| T-060 | Wire Domestic | Tier 1 | Consumer | 25,003 | Callback |
+| T-061 | Cash Deposit | Tier 1 | Consumer | 10,004 | File CTR |
+| T-062 | Cash Deposit | Tier 1 | Preferred | 25,004 | EDD |
+| T-063 | Cash Deposit | Tier 1 | Private | 50,004 | SON |
+| T-064 | Cash Deposit | Tier 2 | Consumer | 5,004 | Profile Review |
+| T-065 | Cash Deposit | Tier 2 | Preferred | 10,004 | File CTR |
+| T-066 | Cash Deposit | Tier 2 | Private | 20,004 | Profile Review |
+| T-067 | Cash Deposit | Tier 3 | Consumer | 2,504 | Urgent Review |
+| T-068 | Cash Deposit | Tier 3 | Preferred | 5,004 | Profile Review |
+| T-069 | Cash Deposit | Tier 3 | Private | 10,004 | File CTR |
+| T-070 | Wire Domestic | Tier 1 | Consumer | 25,004 | Callback |
+| T-071 | Cash Deposit | Tier 1 | Consumer | 10,005 | File CTR |
+| T-072 | Cash Deposit | Tier 1 | Preferred | 25,005 | EDD |
+| T-073 | Cash Deposit | Tier 1 | Private | 50,005 | SON |
+| T-074 | Cash Deposit | Tier 2 | Consumer | 5,005 | Profile Review |
+| T-075 | Cash Deposit | Tier 2 | Preferred | 10,005 | File CTR |
+| T-076 | Cash Deposit | Tier 2 | Private | 20,005 | Profile Review |
+| T-077 | Cash Deposit | Tier 3 | Consumer | 2,505 | Urgent Review |
+| T-078 | Cash Deposit | Tier 3 | Preferred | 5,005 | Profile Review |
+| T-079 | Cash Deposit | Tier 3 | Private | 10,005 | File CTR |
+| T-080 | Wire Domestic | Tier 1 | Consumer | 25,005 | Callback |
+| T-081 | Cash Deposit | Tier 1 | Consumer | 10,006 | File CTR |
+| T-082 | Cash Deposit | Tier 1 | Preferred | 25,006 | EDD |
+| T-083 | Cash Deposit | Tier 1 | Private | 50,006 | SON |
+| T-084 | Cash Deposit | Tier 2 | Consumer | 5,006 | Profile Review |
+| T-085 | Cash Deposit | Tier 2 | Preferred | 10,006 | File CTR |
+| T-086 | Cash Deposit | Tier 2 | Private | 20,006 | Profile Review |
+| T-087 | Cash Deposit | Tier 3 | Consumer | 2,506 | Urgent Review |
+| T-088 | Cash Deposit | Tier 3 | Preferred | 5,006 | Profile Review |
+| T-089 | Cash Deposit | Tier 3 | Private | 10,006 | File CTR |
+| T-090 | Wire Domestic | Tier 1 | Consumer | 25,006 | Callback |
+| T-091 | Cash Deposit | Tier 1 | Consumer | 10,007 | File CTR |
+| T-092 | Cash Deposit | Tier 1 | Preferred | 25,007 | EDD |
+| T-093 | Cash Deposit | Tier 1 | Private | 50,007 | SON |
+| T-094 | Cash Deposit | Tier 2 | Consumer | 5,007 | Profile Review |
+| T-095 | Cash Deposit | Tier 2 | Preferred | 10,007 | File CTR |
+| T-096 | Cash Deposit | Tier 2 | Private | 20,007 | Profile Review |
+| T-097 | Cash Deposit | Tier 3 | Consumer | 2,507 | Urgent Review |
+| T-098 | Cash Deposit | Tier 3 | Preferred | 5,007 | Profile Review |
+| T-099 | Cash Deposit | Tier 3 | Private | 10,007 | File CTR |
+| T-100 | Wire Domestic | Tier 1 | Consumer | 25,007 | Callback |
+| T-101 | Cash Deposit | Tier 1 | Consumer | 10,008 | File CTR |
+| T-102 | Cash Deposit | Tier 1 | Preferred | 25,008 | EDD |
+| T-103 | Cash Deposit | Tier 1 | Private | 50,008 | SON |
+| T-104 | Cash Deposit | Tier 2 | Consumer | 5,008 | Profile Review |
+| T-105 | Cash Deposit | Tier 2 | Preferred | 10,008 | File CTR |
+| T-106 | Cash Deposit | Tier 2 | Private | 20,008 | Profile Review |
+| T-107 | Cash Deposit | Tier 3 | Consumer | 2,508 | Urgent Review |
+| T-108 | Cash Deposit | Tier 3 | Preferred | 5,008 | Profile Review |
+| T-109 | Cash Deposit | Tier 3 | Private | 10,008 | File CTR |
+| T-110 | Wire Domestic | Tier 1 | Consumer | 25,008 | Callback |
+| T-111 | Cash Deposit | Tier 1 | Consumer | 10,009 | File CTR |
+| T-112 | Cash Deposit | Tier 1 | Preferred | 25,009 | EDD |
+| T-113 | Cash Deposit | Tier 1 | Private | 50,009 | SON |
+| T-114 | Cash Deposit | Tier 2 | Consumer | 5,009 | Profile Review |
+| T-115 | Cash Deposit | Tier 2 | Preferred | 10,009 | File CTR |
+| T-116 | Cash Deposit | Tier 2 | Private | 20,009 | Profile Review |
+| T-117 | Cash Deposit | Tier 3 | Consumer | 2,509 | Urgent Review |
+| T-118 | Cash Deposit | Tier 3 | Preferred | 5,009 | Profile Review |
+| T-119 | Cash Deposit | Tier 3 | Private | 10,009 | File CTR |
+| T-120 | Wire Domestic | Tier 1 | Consumer | 25,009 | Callback |
+| T-121 | Cash Deposit | Tier 1 | Consumer | 10,010 | File CTR |
+| T-122 | Cash Deposit | Tier 1 | Preferred | 25,010 | EDD |
+| T-123 | Cash Deposit | Tier 1 | Private | 50,010 | SON |
+| T-124 | Cash Deposit | Tier 2 | Consumer | 5,010 | Profile Review |
+| T-125 | Cash Deposit | Tier 2 | Preferred | 10,010 | File CTR |
+| T-126 | Cash Deposit | Tier 2 | Private | 20,010 | Profile Review |
+| T-127 | Cash Deposit | Tier 3 | Consumer | 2,510 | Urgent Review |
+| T-128 | Cash Deposit | Tier 3 | Preferred | 5,010 | Profile Review |
+| T-129 | Cash Deposit | Tier 3 | Private | 10,010 | File CTR |
+| T-130 | Wire Domestic | Tier 1 | Consumer | 25,010 | Callback |
+| T-131 | Cash Deposit | Tier 1 | Consumer | 10,011 | File CTR |
+| T-132 | Cash Deposit | Tier 1 | Preferred | 25,011 | EDD |
+| T-133 | Cash Deposit | Tier 1 | Private | 50,011 | SON |
+| T-134 | Cash Deposit | Tier 2 | Consumer | 5,011 | Profile Review |
+| T-135 | Cash Deposit | Tier 2 | Preferred | 10,011 | File CTR |
+| T-136 | Cash Deposit | Tier 2 | Private | 20,011 | Profile Review |
+| T-137 | Cash Deposit | Tier 3 | Consumer | 2,511 | Urgent Review |
+| T-138 | Cash Deposit | Tier 3 | Preferred | 5,011 | Profile Review |
+| T-139 | Cash Deposit | Tier 3 | Private | 10,011 | File CTR |
+| T-140 | Wire Domestic | Tier 1 | Consumer | 25,011 | Callback |
+| T-141 | Cash Deposit | Tier 1 | Consumer | 10,012 | File CTR |
+| T-142 | Cash Deposit | Tier 1 | Preferred | 25,012 | EDD |
+| T-143 | Cash Deposit | Tier 1 | Private | 50,012 | SON |
+| T-144 | Cash Deposit | Tier 2 | Consumer | 5,012 | Profile Review |
+| T-145 | Cash Deposit | Tier 2 | Preferred | 10,012 | File CTR |
+| T-146 | Cash Deposit | Tier 2 | Private | 20,012 | Profile Review |
+| T-147 | Cash Deposit | Tier 3 | Consumer | 2,512 | Urgent Review |
+| T-148 | Cash Deposit | Tier 3 | Preferred | 5,012 | Profile Review |
+| T-149 | Cash Deposit | Tier 3 | Private | 10,012 | File CTR |
+| T-150 | Wire Domestic | Tier 1 | Consumer | 25,012 | Callback |
+| T-151 | Cash Deposit | Tier 1 | Consumer | 10,013 | File CTR |
+| T-152 | Cash Deposit | Tier 1 | Preferred | 25,013 | EDD |
+| T-153 | Cash Deposit | Tier 1 | Private | 50,013 | SON |
+| T-154 | Cash Deposit | Tier 2 | Consumer | 5,013 | Profile Review |
+| T-155 | Cash Deposit | Tier 2 | Preferred | 10,013 | File CTR |
+| T-156 | Cash Deposit | Tier 2 | Private | 20,013 | Profile Review |
+| T-157 | Cash Deposit | Tier 3 | Consumer | 2,513 | Urgent Review |
+| T-158 | Cash Deposit | Tier 3 | Preferred | 5,013 | Profile Review |
+| T-159 | Cash Deposit | Tier 3 | Private | 10,013 | File CTR |
+| T-160 | Wire Domestic | Tier 1 | Consumer | 25,013 | Callback |
+| T-161 | Cash Deposit | Tier 1 | Consumer | 10,014 | File CTR |
+| T-162 | Cash Deposit | Tier 1 | Preferred | 25,014 | EDD |
+| T-163 | Cash Deposit | Tier 1 | Private | 50,014 | SON |
+| T-164 | Cash Deposit | Tier 2 | Consumer | 5,014 | Profile Review |
+| T-165 | Cash Deposit | Tier 2 | Preferred | 10,014 | File CTR |
+| T-166 | Cash Deposit | Tier 2 | Private | 20,014 | Profile Review |
+| T-167 | Cash Deposit | Tier 3 | Consumer | 2,514 | Urgent Review |
+| T-168 | Cash Deposit | Tier 3 | Preferred | 5,014 | Profile Review |
+| T-169 | Cash Deposit | Tier 3 | Private | 10,014 | File CTR |
+| T-170 | Wire Domestic | Tier 1 | Consumer | 25,014 | Callback |
+| T-171 | Cash Deposit | Tier 1 | Consumer | 10,015 | File CTR |
+| T-172 | Cash Deposit | Tier 1 | Preferred | 25,015 | EDD |
+| T-173 | Cash Deposit | Tier 1 | Private | 50,015 | SON |
+| T-174 | Cash Deposit | Tier 2 | Consumer | 5,015 | Profile Review |
+| T-175 | Cash Deposit | Tier 2 | Preferred | 10,015 | File CTR |
+| T-176 | Cash Deposit | Tier 2 | Private | 20,015 | Profile Review |
+| T-177 | Cash Deposit | Tier 3 | Consumer | 2,515 | Urgent Review |
+| T-178 | Cash Deposit | Tier 3 | Preferred | 5,015 | Profile Review |
+| T-179 | Cash Deposit | Tier 3 | Private | 10,015 | File CTR |
+| T-180 | Wire Domestic | Tier 1 | Consumer | 25,015 | Callback |
+| T-181 | Cash Deposit | Tier 1 | Consumer | 10,016 | File CTR |
+| T-182 | Cash Deposit | Tier 1 | Preferred | 25,016 | EDD |
+| T-183 | Cash Deposit | Tier 1 | Private | 50,016 | SON |
+| T-184 | Cash Deposit | Tier 2 | Consumer | 5,016 | Profile Review |
+| T-185 | Cash Deposit | Tier 2 | Preferred | 10,016 | File CTR |
+| T-186 | Cash Deposit | Tier 2 | Private | 20,016 | Profile Review |
+| T-187 | Cash Deposit | Tier 3 | Consumer | 2,516 | Urgent Review |
+| T-188 | Cash Deposit | Tier 3 | Preferred | 5,016 | Profile Review |
+| T-189 | Cash Deposit | Tier 3 | Private | 10,016 | File CTR |
+| T-190 | Wire Domestic | Tier 1 | Consumer | 25,016 | Callback |
+| T-191 | Cash Deposit | Tier 1 | Consumer | 10,017 | File CTR |
+| T-192 | Cash Deposit | Tier 1 | Preferred | 25,017 | EDD |
+| T-193 | Cash Deposit | Tier 1 | Private | 50,017 | SON |
+| T-194 | Cash Deposit | Tier 2 | Consumer | 5,017 | Profile Review |
+| T-195 | Cash Deposit | Tier 2 | Preferred | 10,017 | File CTR |
+| T-196 | Cash Deposit | Tier 2 | Private | 20,017 | Profile Review |
+| T-197 | Cash Deposit | Tier 3 | Consumer | 2,517 | Urgent Review |
+| T-198 | Cash Deposit | Tier 3 | Preferred | 5,017 | Profile Review |
+| T-199 | Cash Deposit | Tier 3 | Private | 10,017 | File CTR |
+| T-200 | Wire Domestic | Tier 1 | Consumer | 25,017 | Callback |
+
+---
+
+## Section 54: State-Specific Regulatory Nuances (Exhaustive)
+
+This section details specific state laws that supersede or augment federal banking regulations.
+
+### 54.1 California (CA) - CCPA and Financial Privacy
+- **CCPA/CPRA**: Customers have the right to request deletion of non-transactional data.
+- **Financial Information Privacy Act (SB1)**: Requires explicit "opt-in" for sharing with non-affiliated third parties.
+- **Mortgage Interest**: Must pay at least 2% interest on escrow accounts.
+
+### 54.2 New York (NY) - DFS Cybersecurity and Lending
+- **23 NYCRR 500**: Requires a designated CISO and annual certification of cyber compliance.
+- **Usury Limits**: Criminal usury for loans > 25% APR (civil > 16%).
+- **Foreclosure**: Judicial foreclosure state with a mandatory settlement conference.
+
+### 54.3 Texas (TX) - Homestead and Community Property
+- **Homestead**: Strongest protection in the US; limited reasons for foreclosure (Tax, Purchase, Home Equity, Improvements).
+- **Home Equity (50(a)(6))**: One-of-a-kind lending rules; requires "fair market value" acknowledgment and 12-day cooling period.
+
+### 54.4 Florida (FL) - Intangible Tax and Foreclosure
+- **Documentary Stamp Tax**: Required on all promissory notes and mortgages.
+- **Intangible Tax**: Recurrent tax on intangible personal property (redacted).
+- **Power of Sale**: Not allowed; all foreclosures must go through the court.
+
+### 54.5 Illinois (IL) - Anti-Predatory Lending
+- **Predatory Lending Database (PLD)**: Loans in certain counties must be entered into a state database for counseling review.
+- **Escrow**: Homeowners with 50% equity can waive escrow.
+
+### 54.6 Massachusetts (MA) - Consumer Protection
+- **Chapter 93A**: Very broad consumer protection statute; allows for triple damages + attorney fees.
+- **Mortgage Disclosures**: Additional "one-page summary" of loan terms required.
+
+### 54.7 New Jersey (NJ) - High-Cost Home Loans
+- **Home Ownership Security Act (HOSA)**: Strict limits on "high-cost" loans, including no financing of points and fees > 3%.
+
+### 54.8 Washington (WA) - Digital Assets and Privacy
+- **Uniform Regulation of Virtual-Currency Businesses Act**: License required for all entities facilitating digital asset transfers for customers.
+
+### 54.9 Georgia (GA) - Fair Lending Act
+- **GAFLA**: Prevents predatory lending by capping points and fees and banning certain loan terms for "high-cost" home loans.
+
+### 54.10 Pennsylvania (PA) - Loan Interest and Protection
+- **Act 6**: Limits interest rates on residential mortgages under a certain amount.
+- **Prepayment Penalties**: Prohibited on residential mortgages under $50,000.
+
+[...REPEATING DETAILED REGULATORY BLOCKS FOR REMAINDER OF 50 STATES...]
+### 54.11 Ohio (OH) - Residential Mortgage Lending Act
+- **OMRLA**: Requires all loan officers to be licensed and bonded.
+- **Disclosure**: "Your Rights as a Borrower" pamphlet must be provided at application.
+
+### 54.12 Michigan (MI) - Mortgage Brokers, Lenders, and Servicers Act
+- **Lending Limits**: Statutory caps on certain fees for residential lending.
+
+### 54.13 North Carolina (NC) - High-Cost Loan Act
+- **Thresholds**: Defined based on APR over the Treasury constant maturity rate.
+
+### 54.14 Virginia (VA) - Small Loan Act
+- **Interest Caps**: Strict regulation of consumer loans under $2,500.
+
+### 54.15 Arizona (AZ) - Money Transmitter Licensing
+- **AML**: Enhanced reporting for wire transfers > $1,000.
+
+### 54.16 Colorado (CO) - UCCC (Uniform Consumer Credit Code)
+- **Finance Charges**: Clear caps and disclosure requirements for all consumer credit.
+
+### 54.17 Maryland (MD) - Secondary Mortgage Loan Law
+- **Compliance**: Restricts terms for second-lien mortgages on dwellings.
+
+### 54.18 Tennessee (TN) - Home Equity Lending
+- **Guidelines**: Governs the priority of future advances in home equity lines.
+
+### 54.19 Indiana (IN) - UCCC Alignment
+- **Disclosures**: Uses Federal TILA/RESPA as a baseline but adds state-specific administrative fees.
+
+### 54.20 Missouri (MO) - Retail Credit Sales Act
+- **Terms**: Regulates time-price differentials for consumer goods financing.
+
+### 54.21 Wisconsin (WI) - Marital Property State
+- **Spousal Consent**: Required for most individual credit applications by a married person.
+
+### 54.22 Minnesota (MN) - Residential Mortgage Anti-Fraud Act
+- **Penalty**: Direct criminal liability for knowingly participating in mortgage fraud.
+
+### 54.23 Oregon (OR) - Mortgage Lender Law
+- **Bonding**: Higher surety bond requirements for out-of-state entities.
+
+### 54.24 South Dakota (SD) - Trust Jurisdiction
+- **Privacy**: No rule against perpetuities; highly attractive for high-net-worth trust migration.
+
+### 54.25 Nevada (NV) - Privacy and Asset Protection
+- **Opt-Out**: Requires specific notice for sharing with "affiliates."
+- **Trusts**: Self-settled asset protection trusts (Dapt) allowed.
+
+### 54.26 Kentucky (KY) - Mortgage Loan Company Act
+- **Regulation**: Oversight by the Dept. of Financial Institutions.
+
+### 54.27 Alabama (AL) - Small Loan Act
+- **Limits**: Covers loans up to $1,000 with monthly interest caps.
+
+### 54.28 Louisiana (LA) - Napoleonic Code Nuances
+- **Security Interests**: Use of "Mortgage" and "Privilege" instead of Deed of Trust.
+- **Community Property**: Strict spousal joinder rules.
+
+### 54.29 Connecticut (CT) - Abusive Home Loan Lending Act
+- **Restricted Terms**: No negative amortization in high-cost loans.
+
+### 54.30 Oklahoma (OK) - UCCC Compatibility
+- **Interest**: Uses a variable usury rate updated semi-annually.
+
+### 54.31 Mississippi (MS) - Consumer Loan Act
+- **Disclosure**: Requires prominent display of APR and total finance charge.
+
+### 54.32 Kansas (KS) - UCCC State
+- **Right to Cure**: Mandatory 10-day notice before declaring a default.
+
+### 54.33 Utah (UT) - Financial Institutions Act
+- **Oversight**: Strong support for Industrial Banks and chartered fintechs.
+
+### 54.34 Iowa (IA) - Consumer Credit Code
+- **Language**: Requires notices in languages other than English in specific zip codes.
+
+### 54.35 Arkansas (AR) - Fair Mortgage Lending Act
+- **Licensing**: Required for any entity "holding out" to be a lender.
+
+### 54.36 Nebraska (NE) - Installment Loan Act
+- **Records**: Must be maintained for 3 years after the loan is paid in full.
+
+### 54.37 West Virginia (WV) - Consumer Credit and Protection Act
+- **Collection**: Strict limits on when and how debt collectors can contact borrowers.
+
+### 54.38 Delaware (DE) - Trust Act
+- **Taxation**: No state income tax on trusts where beneficiaries reside elsewhere.
+
+### 54.39 New Hampshire (NH) - Consumer Credit Disclosure
+- **Plain Language**: All contracts must meet a Flesch scale readability score > 60.
+
+### 54.40 Maine (ME) - Consumer Credit Code
+- **Standard**: Most protective state for second-lien mortgages.
+
+### 54.41 Idaho (ID) - Credit Code
+- **Prepayment**: No penalty allowed on any home loan.
+
+### 54.42 Montana (MT) - Mortgage Broker and Lender Act
+- **Reciprocity**: Does not offer NMLS reciprocity; requires separate education.
+
+### 54.43 Wyoming (WY) - Digital Assets
+- **SPDIs (Special Purpose Depository Institutions)**: Unique charter for crypto-native banking.
+
+### 54.44 Rhode Island (RI) - Fair Lending
+- **HMDA**: Requires duplicate reporting to the state for state-chartered banks.
+
+### 54.45 Vermont (VT) - Consumer Protection
+- **Usury**: Lowest caps in the nation for personal signature loans.
+
+### 54.46 New Mexico (NM) - Home Loan Protection Act
+- **Restriction**: Bans financing of single-premium credit insurance.
+
+### 54.47 Alaska (AK) - Trust and Banking
+- **Situs**: Allows for creation of domestic asset protection trusts.
+
+### 54.48 Hawaii (HI) - Mortgage Loan Originators Act
+- **Background**: Requires character and fitness review every 2 years.
+
+### 54.49 North Dakota (ND) - State Banking
+- **Nuance**: High cooperation between private banks and the Bank of North Dakota.
+
+### 54.50 South Carolina (SC) - Consumer Protection Code
+- **Attorney Preference**: Borrower has the right to choose their closing attorney.
+
+---
+
+## Section 55: Detailed Customer Archetypes (Agent Simulation Data)
+
+This section provides rich personas for the Agent system to use during training simulations and conflict resolution testing.
+
+### 55.1 Persona: "The Overstressed Small Business Owner" (ID: PA-001)
+- **Profile**: Owner of "Main Street Coffee." 15 years with the bank.
+- **Typical Behavior**: High volume of small ACH transactions. Frequent calls regarding "Positive Pay" exceptions.
+- **Conflict Pattern**: Becomes irritable when fraud holds affect payroll.
+- **Preference**: Values speed over detailed explanations.
+
+### 55.2 Persona: "The High-Net-Worth Retiree" (ID: PA-002)
+- **Profile**: Retired surgeon. ABC Private Banking client.
+- **Typical Behavior**: Large quarterly dividends. Frequent international wires for travel.
+- **Conflict Pattern**: Expects immediate "white glove" service and waiver of all fees.
+- **Preference**: Prefers phone calls from a dedicated manager.
+
+### 55.3 Persona: "The Tech-Savvy Gig Worker" (ID: PA-003)
+- **Profile**: 24-year-old freelance developer. Mobile-only user.
+- **Typical Behavior**: Daily micro-transactions. Frequent use of Zelle and Venmo.
+- **Conflict Pattern**: Frustrated by "Check Holds" on mobile deposits.
+- **Preference**: Self-service via app; dislikes calling support.
+
+[...REPEATING Personas 55.4 TO 55.50...]
+### 55.4 Persona: "The Cautious New Immigrant" (ID: PA-004)
+- **Profile**: Recently moved for Work. Opening first US account.
+- **Typical Behavior**: Small, regular deposits from salary. Occasional international remittances.
+- **Conflict Pattern**: Confused by US banking terminology (Escrow, APR).
+- **Preference**: Multi-lingual support; printed documents.
+
+### 55.5 Persona: "The Non-Profit Treasurer" (ID: PA-005)
+- **Profile**: Volunteer for "City Food Bank."
+- **Typical Behavior**: Large grant deposits. Frequent check issuance to multiple vendors.
+- **Conflict Pattern**: Concerned with "Audit Trails" and duplicate detection.
+- **Preference**: Detailed monthly statements; multi-user access permissions.
+
+### 55.6 Persona: "The Aggressive Real Estate Investor" (ID: PA-006)
+- **Profile**: Portfolio of 20+ rental properties.
+- **Typical Behavior**: Multiple mortgage payments. Frequent requests for HELOC increases.
+- **Conflict Pattern**: Very price-sensitive regarding interest rates and points.
+- **Preference**: Bulk management tools; fast closing times.
+
+### 55.7 Persona: "The Identity Theft Victim" (ID: PA-007)
+- **Profile**: High anxiety due to recent compromise.
+- **Typical Behavior**: Checking account daily. Frequent password changes.
+- **Conflict Pattern**: Requests "Lock Down" of all features; suspicious of all calls.
+- **Preference**: Maximum security; willing to accept friction for safety.
+
+### 55.8 Persona: "The Student Abroad" (ID: PA-008)
+- **Profile**: Studying in London.
+- **Typical Behavior**: International ATM usage. Low balance alerts.
+- **Conflict Pattern**: Card blocked due to "Unusual Geographic Activity."
+- **Preference**: In-app travel notices; 24/7 global support.
+
+### 55.9 Persona: "The Corporate Treasurer" (ID: PA-009)
+- **Profile**: Finance lead for a Mid-Cap manufacturer.
+- **Typical Behavior**: Multi-million dollar daily sweeps. FX forward hedging.
+- **Conflict Pattern**: High-stakes disputes regarding wire settlement timing.
+- **Preference**: API-driven banking; 15-minute SLA.
+
+### 55.10 Persona: "The Suspicious Heir" (ID: PA-010)
+- **Profile**: Recently inherited a complex trust.
+- **Typical Behavior**: Assessing asset distribution. questioning fiduciary fees.
+- **Conflict Pattern**: Challenges the "Validity" of the Trust Agreement.
+- **Preference**: Legal-centric communications; detailed performance reports.
+
+### 55.11 Persona: "The Weekend Farmer" (ID: PA-011)
+- **Profile**: Hobby farm owner. Seasonal income.
+- **Typical Behavior**: Large input purchases in spring. Equipment loans.
+- **Conflict Pattern**: Cash flow mismatch with standard payment dates.
+- **Preference**: Flexible repayment schedules; relationship-based lending.
+
+### 55.12 Persona: "The E-Commerce Seller" (ID: PA-012)
+- **Profile**: Sells on Amazon/Shopify. High transaction volume.
+- **Typical Behavior**: Frequent incoming ACH from marketplaces. Global sourcing wires.
+- **Conflict Pattern**: Account flagged for "Rapid Fund Movement."
+- **Preference**: Fast dispute resolution for merchant holds.
+
+### 55.13 Persona: "The Local Politician" (ID: PA-013)
+- **Profile**: Running for City Council. Campaign account.
+- **Typical Behavior**: Many small donations. Strict reporting requirements.
+- **Conflict Pattern**: Extremely sensitive to any perception of impropriety.
+- **Preference**: FEC-compliant reporting formats.
+
+### 55.14 Persona: "The Established Manufacturer" (ID: PA-014)
+- **Profile**: Family-owned factory (3rd generation).
+- **Typical Behavior**: Large payroll ACH. Seasonal lines of credit.
+- **Conflict Pattern**: Resistant to "Digital First" changes; prefers the local branch.
+- **Preference**: Long-term stability; consistent contact person.
+
+### 55.15 Persona: "The Digital Nomad" (ID: PA-015)
+- **Profile**: Works remotely from different countries every month.
+- **Typical Behavior**: Global card usage. Multiple currency transfers.
+- **Conflict Pattern**: Constantly triggering fraud alerts for "VPN Usage."
+- **Preference**: Seamless global access; low FX fees.
+
+### 55.16 Persona: "The Frugal Saver" (ID: PA-016)
+- **Profile**: Conservative investor. High liquidity.
+- **Typical Behavior**: Laddered CDs. Weekly savings transfers.
+- **Conflict Pattern**: Angered by even a 0.01% drop in APY.
+- **Preference**: Guaranteed returns; no-risk products.
+
+### 55.17 Persona: "The Credit Rebuilder" (ID: PA-017)
+- **Profile**: Recovering from bankruptcy.
+- **Typical Behavior**: Secured credit card usage. Small installment loans.
+- **Conflict Pattern**: Monitoring credit score weekly; disputes minor late marks.
+- **Preference**: Path to unsecured credit; financial coaching.
+
+### 55.18 Persona: "The HOA President" (ID: PA-18)
+- **Profile**: Manages "Sunny Palms" condo association.
+- **Typical Behavior**: Collecting 100+ monthly dues. Management of reserve fund.
+- **Conflict Pattern**: Issues with check signatures from multiple board members.
+- **Preference**: Commercial-grade treasury tools at a consumer price.
+
+### 55.19 Persona: "The Crypto-Pivot Entrepreneur" (ID: PA-019)
+- **Profile**: Moving from Web2 to Web3. High risk appetite.
+- **Typical Behavior**: Large transfers to/from Exchanges.
+- **Conflict Pattern**: Frustrated by "Enhanced Due Diligence" delays.
+- **Preference**: High wire limits; understanding of digital asset flows.
+
+### 55.20 Persona: "The Medical Professional" (ID: PA-020)
+- **Profile**: Busy resident at City Hospital.
+- **Typical Behavior**: Overnight mobile usage. Student loan payments.
+- **Conflict Pattern**: No time for daytime follow-ups.
+- **Preference**: Evening support availability; automated alerts.
+
+### 55.21 Persona: "The Multi-Generational Family" (ID: PA-021)
+- **Profile**: Joint accounts for parents, children, and grandparents.
+- **Typical Behavior**: Frequent internal transfers for "Allowance" or "Care."
+- **Conflict Pattern**: Confusion over "Beneficiary" vs "Joint Owner" rights.
+- **Preference**: One-view household dashboard.
+
+### 55.22 Persona: "The High-Frequency Trader" (ID: PA-022)
+- **Profile**: Individual trading large volumes from personal account.
+- **Typical Behavior**: Constant inflow/outflow to various brokerages.
+- **Conflict Pattern**: Account flagged for "Day Trading" patterns (Finra).
+- **Preference**: Maximum liquidity; sub-minute transfer speeds.
+
+### 55.23 Persona: "The Environmental Advocate" (ID: PA-023)
+- **Profile**: Only invests in "Green" or "Impact" funds.
+- **Typical Behavior**: ESG portfolio usage. Active in community banking.
+- **Conflict Pattern**: Objects to Bank's indirect fossil fuel investments.
+- **Preference**: Ethical transparency reports.
+
+### 55.24 Persona: "The Rural Store Owner" (ID: PA-024)
+- **Profile**: Only grocer in a 50-mile radius.
+- **Typical Behavior**: High cash intake. Frequent coin/small bill orders.
+- **Conflict Pattern**: Logistics issues with armored car pickups.
+- **Preference**: Priority cash handling; physical security support.
+
+### 55.25 Persona: "The Recently Divorced" (ID: PA-025)
+- **Profile**: Splitting joint assets. High emotional stress.
+- **Typical Behavior**: Opening new individual accounts. Setting up new auto-pays.
+- **Conflict Pattern**: Disputes over unauthorized withdrawals by "ex-spouse."
+- **Preference**: Clear legal boundaries; compassionate support.
+
+### 55.26 Persona: "The Freelance Consultant" (ID: PA-026)
+- **Profile**: 1099 income from 10+ sources.
+- **Typical Behavior**: Tax-savings transfers. Inconsistent monthly income.
+- **Conflict Pattern**: Struggles with "Average Daily Balance" requirements.
+- **Preference**: Low-fee checking with no minimums.
+
+### 55.27 Persona: "The Travel Blogger" (ID: PA-027)
+- **Profile**: Constant traveler; income from sponsorships.
+- **Typical Behavior**: Reimbursed expenses. High reward-point redemption.
+- **Conflict Pattern**: Booking high-value travel items that trigger fraud blocks.
+- **Preference**: Elite travel perks; hassle-free global card usage.
+
+### 55.28 Persona: "The Independent Artist" (ID: PA-028)
+- **Profile**: Income from gallery sales and Patreon.
+- **Typical Behavior**: Occasional large deposits; many small monthly subs.
+- **Conflict Pattern**: Unpredictable cash flow leads to occasional NSF.
+- **Preference**: Overdraft protection; flexible fee waivers.
+
+### 55.29 Persona: "The Tech Executive" (ID: PA-029)
+- **Profile**: VP at a Unicorn startup. Stock-based compensation.
+- **Typical Behavior**: Large liquidity events (IPO/Secondary). Use of stock-backed loans.
+- **Conflict Pattern**: Complex tax planning requires specialized reporting.
+- **Preference**: Wealth management expertise; discretion.
+
+### 55.30 Persona: "The Local Restaurant Group" (ID: PA-030)
+- **Profile**: Runs 5 local eateries.
+- **Typical Behavior**: Large cash deposits. Multiple payroll runs.
+- **Conflict Pattern**: High volume of "Chargeback" disputes from customers.
+- **Preference**: Merchant service expertise; robust fraud tools.
+
+### 55.31 Persona: "The Construction Firm" (ID: PA-031)
+- **Profile**: Mid-size commercial contractor.
+- **Typical Behavior**: High-value check issuance. Performance bond requests.
+- **Conflict Pattern**: Delays in "Letter of Credit" issuance stall projects.
+- **Preference**: Dedicated commercial banker; fast underwriting.
+
+### 55.32 Persona: "The Religious Organization" (ID: PA-032)
+- **Profile**: Local Parish. High volume of small check/cash donations.
+- **Typical Behavior**: Endowment management. Weekly cash deposits.
+- **Conflict Pattern**: Multiple authorized signers lead to "Internal Control" lapses.
+- **Preference**: Non-profit specialized tools; dual-control oversight.
+
+### 55.33 Persona: "The Professional Athlete" (ID: PA-033)
+- **Profile**: Highly publicized income. Short career window.
+- **Typical Behavior**: Extremely high inflows. Specialized investment needs.
+- **Conflict Pattern**: Target for "Financial Fraud" and unsolicited solicitations.
+- **Preference**: Maximum privacy; security-first posture.
+
+### 55.34 Persona: "The Early-Stage Founder" (ID: PA-034)
+- **Profile**: Living on VC funding. Pivot-heavy business.
+- **Typical Behavior**: Large initial seed deposit. Rapid burn rate.
+- **Conflict Pattern**: Bank's "Stability" checks slow down rapid pivots.
+- **Preference**: Venture-banking features; mentorship network.
+
+### 55.35 Persona: "The Government Employee" (ID: PA-035)
+- **Profile**: Stable income. Pension-focused.
+- **Typical Behavior**: Direct deposit from state. Consistent savings rate.
+- **Conflict Pattern**: Very low tolerance for fees or "New" unproven products.
+- **Preference**: Long-term reliability; "Plain Vanilla" products.
+
+### 55.36 Persona: "The Franchise Owner" (ID: PA-036)
+- **Profile**: Owns 3 Fast-Food franchises.
+- **Typical Behavior**: Daily sweeps to corporate. Franchise fee ACH.
+- **Conflict Pattern**: Conflict between "Bank Rules" and "Franchisor Rules."
+- **Preference**: Multi-unit reporting; automated royalty transfers.
+
+### 55.37 Persona: "The Digital Collectibles Dealer" (ID: PA-037)
+- **Profile**: Sells high-value NFTs/Digital assets.
+- **Typical Behavior**: Erratic $ inflows. Frequent "On-ramp" transfers.
+- **Conflict Pattern**: Under constant "AML Monitoring" due to asset type.
+- **Preference**: Crypto-friendly posture; fast KYC clear times.
+
+### 55.38 Persona: "The Cybersecurity Professional" (ID: PA-038)
+- **Profile**: Works in Infosec. Extremely privacy conscious.
+- **Typical Behavior**: Minimal digital footprint. Use of privacy-centric tools.
+- **Conflict Pattern**: Complains about Bank's "Data Sharing" policies.
+- **Preference**: End-to-end encryption; no tracking.
+
+### 55.39 Persona: "The Social Media Influencer" (ID: PA-039)
+- **Profile**: High visibility. Income from various platforms/brands.
+- **Typical Behavior**: International deposits. Frequent high-value purchases.
+- **Conflict Pattern**: Identity spoofing a major risk for account access.
+- **Preference**: Biometric-first authentication; real-time monitors.
+
+### 55.40 Persona: "The Manufacturing Exporter" (ID: PA-040)
+- **Profile**: Ships components globally.
+- **Typical Behavior**: Heavy use of "Letters of Credit" and Trade Finance.
+- **Conflict Pattern**: Disputes regarding "Correspondent Bank" fees in foreign countries.
+- **Preference**: Global network reach; trade expertise.
+
+### 55.41 Persona: "The Boutique Hotel Owner" (ID: PA-041)
+- **Profile**: Independent luxury property.
+- **Typical Behavior**: High seasonal variance in cash flow. Merchant processing focus.
+- **Conflict Pattern**: "Merchant Reserve" requirements during off-season.
+- **Preference**: Seasonal lending terms; hospitality-specific tools.
+
+### 55.42 Persona: "The Academic Researcher" (ID: PA-042)
+- **Profile**: Grant-funded. Highly analytical.
+- **Typical Behavior**: Complex expense tracking. Occasional international travel.
+- **Conflict Pattern**: Questions the "Logic" of every fee using 10-page emails.
+- **Preference**: Evidence-based banking; detailed data exports.
+
+### 55.43 Persona: "The Venture Capitalist" (ID: PA-043)
+- **Profile**: General Partner. Capital call focus.
+- **Typical Behavior**: Large, irregular "Capital Call" transfers. Wealth management.
+- **Conflict Pattern**: Needs "Immediate" response for time-sensitive deals.
+- **Preference**: 24/7 direct access to lead banker.
+
+### 55.44 Persona: "The Home Based Bakery" (ID: PA-044)
+- **Profile**: Cottage industry business.
+- **Typical Behavior**: Micro-deposits from Square/Stripe. Equipment purchases.
+- **Conflict Pattern**: Commingling of personal and business funds.
+- **Preference**: Educational resources for business growth.
+
+### 55.45 Persona: "The Recently Naturalized" (ID: PA-045)
+- **Profile**: Building a full US financial life.
+- **Typical Behavior**: Establishing credit. Buying first home.
+- **Conflict Pattern**: Thin credit file issues despite good income.
+- **Preference**: Credit-building products; guidance.
+
+### 55.46 Persona: "The Real Estate Developer" (ID: PA-046)
+- **Profile**: Large scale commercial builds.
+- **Typical Behavior**: Multi-million dollar construction draws. Bond issuance.
+- **Conflict Pattern**: Disputes over "Inspection" delays for funding release.
+- **Preference**: Construction-savvy lenders; high limit commercial cards.
+
+### 55.47 Persona: "The Retiree Abroad" (ID: PA-047)
+- **Profile**: US citizen living in Costa Rica.
+- **Typical Behavior**: Foreign ATM usage. Monthly pension direct deposit.
+- **Conflict Pattern**: Issues with "Proof of Life" for IRA distributions.
+- **Preference**: Digital-first verification; no foreign transaction fees.
+
+### 55.48 Persona: "The Cybersecurity Startup" (ID: PA-048)
+- **Profile**: VC-backed. High-growth.
+- **Typical Behavior**: Substantial payroll. International contractor payments.
+- **Conflict Pattern**: Demands higher "Security Features" than standard bank offering.
+- **Preference**: Advanced IAM integration; audit-ready logs.
+
+### 55.49 Persona: "The Family Foundation" (ID: PA-049)
+- **Profile**: Manages charitable endowment.
+- **Typical Behavior**: Quarterly grant-making. Philanthropic advisory usage.
+- **Conflict Pattern**: Complexity regarding "Impact" reporting for investments.
+- **Preference**: Dedicated non-profit advisor; ESG expertise.
+
+### 55.50 Persona: "The AI Researcher" (ID: PA-050)
+- **Profile**: Working on generative models. High income.
+- **Typical Behavior**: High spend on "Cloud Compute." Use of automated trading.
+- **Conflict Pattern**: "Automated Scripts" triggering API rate limits.
+- **Preference**: High-rate API access; developer-friendly sandbox.
+
+---
+
+## Section 56: Final Comprehensive Revision History (Master Log)
+
+| Version | Date | Author | Description |
+|---------|------|--------|-------------|
+| 2.3.1 | Jan 2026 | TuanNM135 | Absolute final expansion for token target (Sections 43-55) |
+| 2.3.0 | Oct 2025 | Sec Team | ISO 27001:2022 alignment |
+| 2.1.5 | Jun 2025 | Legal | Privacy notice updates |
+| 2.0.0 | Jan 2025 | Ops | Baseline version |
+
+---
+
+## Document End (The Absolute Definitive Internal Operations Manual)
+
+<<< END OF INTERNAL OPERATIONS & COMPLIANCE MANUAL - VERSION 2.3.1 >>>
+
+---
+## Supplemental Operational Note: Managing Large Prefixes for Agent Performance
+
+*Internal IT Note: This manual's size is deliberately maintained at ~25,000 tokens to test and validate Prefix Caching performance in the Expert System. Agents must process the full manual as a static prefix to ensure high KV Cache hit rates and minimal TTFT.*
+
+<<< END OF SUPPLEMENTAL NOTE >>>

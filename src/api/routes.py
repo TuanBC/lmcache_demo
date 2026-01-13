@@ -25,6 +25,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Request
 from langgraph.graph.state import CompiledStateGraph
 
+from src.api.prometheus import prometheus_metrics_endpoint
 from src.api.schemas import (
     HealthResponse,
     QueryRequest,
@@ -36,6 +37,22 @@ from src.config.langfuse import get_langfuse_handler
 logger = logging.getLogger(__name__)
 
 router = APIRouter()
+
+
+@router.get("/metrics")
+async def metrics():
+    """
+    Prometheus metrics endpoint.
+
+    Exposes metrics for:
+    - Request counts by agent
+    - TTFT histogram
+    - Cache hit/miss rates
+    - Prefix alignment health
+
+    Scrape with: curl http://localhost:8000/metrics
+    """
+    return await prometheus_metrics_endpoint()
 
 
 # =============================================================================
@@ -61,6 +78,7 @@ async def get_manual(request: Request) -> str:
 @router.post("/api/v1/query", response_model=QueryResponse)
 async def handle_query(
     body: QueryRequest,
+    request: Request,
     graph: Annotated[CompiledStateGraph, Depends(get_graph)],
     manual: Annotated[str, Depends(get_manual)],
 ) -> QueryResponse:
@@ -69,13 +87,16 @@ async def handle_query(
 
     FLOW:
     -----
-    1. Router determines which agents to call
-    2. Selected agents execute in parallel
-    3. Aggregator combines responses
+    1. Retrieve conversation history from checkpointer (if exists)
+    2. Router determines which agents to call
+    3. Selected agents execute in parallel
+    4. Aggregator combines responses
+    5. Save updated state with new history
 
     CHECKPOINTER SUPPORT:
     ---------------------
     Uses session_id as thread_id for state persistence.
+    Retrieves previous conversation history for multi-turn support.
     """
     logger.info(f"[API] Query received: session={body.session_id}, query={body.query[:50]}...")
 
@@ -92,12 +113,31 @@ async def handle_query(
         },
     }
 
+    # Retrieve previous conversation history from checkpointer
+    history: list[dict] = []
+    try:
+        checkpointer = getattr(request.app.state, "checkpointer", None)
+        if checkpointer is not None:
+            # Try to get the latest state for this thread
+            state_snapshot = await graph.aget_state(config)
+            if state_snapshot and state_snapshot.values:
+                previous_history = state_snapshot.values.get("history", [])
+                if previous_history:
+                    history = list(previous_history)
+                    logger.info(f"[API] Retrieved {len(history)} messages from history")
+    except Exception as e:
+        logger.warning(f"[API] Could not retrieve history (first request?): {e}")
+
+    # Add current query to history for context
+    # This ensures the current turn is included in the prompt
+    current_turn = {"role": "user", "content": body.query}
+
     # Invoke the graph with AGENTS.MD compliant initial state
     result = await graph.ainvoke(
         {
             "query": body.query,
             "manual_content": manual,
-            "history": [],
+            "history": history + [current_turn],  # Include previous + current
             "route_decision": [],
             "selected_agents": [],
             "agent_responses": {},
@@ -105,6 +145,7 @@ async def handle_query(
             "compliance_issues": [],
             "retry_count": 0,
             "ttft_seconds": 0.0,
+            "session_id": body.session_id,  # Pass session_id for tracing
         },
         config=config,
     )
@@ -115,7 +156,7 @@ async def handle_query(
 
     logger.info(
         f"[API] Query complete: agents={result.get('route_decision', [])}, "
-        f"compliance_passed={compliance_passed}"
+        f"compliance_passed={compliance_passed}, history_len={len(history) + 1}"
     )
 
     return QueryResponse(

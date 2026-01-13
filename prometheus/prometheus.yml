@@ -1,0 +1,27 @@
+# =============================================================================
+# Prometheus Configuration
+# =============================================================================
+# Scrapes metrics from all services in the multi-agent stack.
+# =============================================================================
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Router metrics (FastAPI + custom cache metrics)
+  - job_name: 'router'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/metrics'
+
+  # Uncomment below when running vLLM/LMCache locally or in Docker
+  # - job_name: 'vllm'
+  #   static_configs:
+  #     - targets: ['localhost:8001']
+  #   metrics_path: '/metrics'
+
+  # - job_name: 'lmcache'
+  #   static_configs:
+  #     - targets: ['localhost:8080']
+  #   metrics_path: '/metrics'
