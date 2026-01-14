@@ -40,6 +40,40 @@ INTRO_TEXT_EST_TOKENS = 30  # ~120 chars of intro ("You are an AI assistant...")
 END_MARKER = "<<< END OF MANUAL >>>"
 END_MARKER_TOKENS = 6  # ~24 chars
 
+# Padding character - use space which tokenizes predictably
+PADDING_CHAR = " "
+
+# Lazy-loaded tokenizer for accurate token counting
+_tokenizer = None
+_tokenizer_name = None
+
+
+def get_tokenizer(model_name: str = None):
+    """Get tokenizer for accurate token counting (lazy loaded)."""
+    global _tokenizer, _tokenizer_name
+
+    if model_name is None:
+        # Default to Qwen model from settings
+        try:
+            from src.config.settings import get_settings
+
+            model_name = get_settings().vllm_model
+        except Exception:
+            model_name = "Qwen/Qwen3-30B-A3B-Instruct-2507"
+
+    if _tokenizer is None or _tokenizer_name != model_name:
+        try:
+            from transformers import AutoTokenizer
+
+            logger.info(f"[PROMPT] Loading tokenizer: {model_name}")
+            _tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+            _tokenizer_name = model_name
+        except Exception as e:
+            logger.warning(f"[PROMPT] Failed to load tokenizer: {e}. Using estimation.")
+            return None
+
+    return _tokenizer
+
 
 class DeterministicPromptBuilder:
     """
@@ -65,33 +99,118 @@ class DeterministicPromptBuilder:
             f"len={len(self._manual)} chars, hash={self._manual_hash}"
         )
 
-        # Use normalized manual directly - NO PADDING
-        # Padding was removed because client-side token estimation (len//4) is inexact
-        # and likely causes misalignment on the server side.
-        # Natural stability of the prefix is better for cache hits.
+        # Store the normalized manual (no padding - server-side tokenizer may differ)
         self._padded_manual = self._manual
-        token_est = self._estimate_tokens(self._manual) + INTRO_TEXT_EST_TOKENS + END_MARKER_TOKENS
-        logger.info(f"[PROMPT] Manual loaded (no padding): ~{token_est} tokens total prefix")
 
-    def _estimate_tokens(self, text: str) -> int:
-        """Estimate token count from character count.
+        # Calculate and log token count for debugging
+        sample_prefix = self._build_sample_prefix(self._manual)
+        total_tokens = self._count_tokens(sample_prefix)
+        remainder = total_tokens % CHUNK_SIZE
 
-        Uses 4 chars ≈ 1 token heuristic (conservative for English).
-        This is compatible with most tokenizers including Qwen.
-        """
+        if remainder == 0:
+            logger.info(
+                f"[PROMPT] ✅ Prefix aligned: {total_tokens} tokens (chunk_size={CHUNK_SIZE})"
+            )
+        else:
+            padding_needed = CHUNK_SIZE - remainder
+            logger.info(
+                f"[PROMPT] Prefix: {total_tokens} tokens "
+                f"(remainder={remainder}, would need +{padding_needed} for alignment)"
+            )
+
+    def _count_tokens(self, text: str) -> int:
+        """Count tokens using the actual tokenizer."""
+        tokenizer = get_tokenizer()
+        if tokenizer is not None:
+            try:
+                return len(tokenizer.encode(text))
+            except Exception as e:
+                logger.warning(f"[PROMPT] Tokenizer encode failed: {e}")
+        # Fallback to estimation
         return len(text) // 4
 
-    # _pad_to_chunk_boundary_full_prefix REMOVED - Inexact padding hurts cache hits
+    def _pad_to_chunk_boundary(self, text: str) -> str:
+        """Pad text so the full prefix aligns to CHUNK_SIZE boundary.
+
+        LMCache stores KV cache in chunks of CHUNK_SIZE tokens.
+        Aligning the prefix to chunk boundaries improves cache hit rate.
+
+        Uses linear search with predictable padding tokens.
+        """
+        # Build a sample full prefix to count total tokens accurately
+        sample_prefix = self._build_sample_prefix(text)
+        initial_tokens = self._count_tokens(sample_prefix)
+
+        remainder = initial_tokens % CHUNK_SIZE
+        if remainder == 0:
+            logger.info(f"[PROMPT] ✅ Already aligned: {initial_tokens} tokens")
+            return text
+
+        # Calculate tokens needed to reach next chunk boundary
+        tokens_needed = CHUNK_SIZE - remainder
+
+        # Use a padding marker that tokenizes predictably (1-2 tokens per unit)
+        # "." typically tokenizes to 1 token in most tokenizers
+        padding_marker = " ."
+
+        # Linear search - add padding until aligned
+        padding = "\n<!-- padding:"
+        for i in range(tokens_needed * 3):  # 3x buffer for safety
+            padding += padding_marker
+
+            padded_text = text + padding + " -->"
+            sample_prefix = self._build_sample_prefix(padded_text)
+            new_tokens = self._count_tokens(sample_prefix)
+            new_remainder = new_tokens % CHUNK_SIZE
+
+            if new_remainder == 0:
+                logger.info(
+                    f"[PROMPT] ✅ Padding successful: {initial_tokens} -> {new_tokens} tokens "
+                    f"(aligned to {CHUNK_SIZE})"
+                )
+                return padded_text
+
+        # Best effort - return padded anyway
+        final_text = text + padding + " -->"
+        sample_prefix = self._build_sample_prefix(final_text)
+        final_tokens = self._count_tokens(sample_prefix)
+        final_remainder = final_tokens % CHUNK_SIZE
+
+        logger.warning(
+            f"[PROMPT] ⚠️ Could not achieve perfect alignment: {final_tokens} tokens "
+            f"(remainder={final_remainder})"
+        )
+        return final_text
+
+    def _build_sample_prefix(self, manual_text: str) -> str:
+        """Build a sample prefix string to count tokens accurately.
+
+        This simulates what the prompty template produces without needing
+        to load and render the full template.
+        """
+        # Approximate the prompty template structure
+        prefix = f"""You are an AI assistant for ABC Bank's internal operations.
+You help bank employees query the Internal Operations & Compliance Manual.
+
+IMPORTANT: Always cite specific sections from the manual when answering.
+If information is not in the manual, clearly state this.
+
+Below is the complete Internal Operations & Compliance Manual:
+
+{manual_text}
+
+<<< END OF MANUAL >>>"""
+        return prefix
 
     @property
     def padded_manual(self) -> str:
-        """Get manual content (no longer padded, name kept for compatibility)."""
+        """Get chunk-aligned manual content."""
         return self._padded_manual
 
     @property
     def prefix_tokens_est(self) -> int:
-        """Estimated token count of the prefix."""
-        return self._estimate_tokens(self._padded_manual)
+        """Actual token count of the prefix using tokenizer."""
+        return self._count_tokens(self._padded_manual)
 
     @staticmethod
     def _normalize(text: str) -> str:

@@ -37,6 +37,11 @@ from src.prompts.manager import CHUNK_SIZE
 
 logger = logging.getLogger(__name__)
 
+# Cache hit detection threshold (ratio of current TTFT to baseline)
+# If TTFT < baseline * threshold, we consider it a likely cache hit
+# Using 0.8 (80%) as a more lenient threshold since remote servers have variance
+CACHE_HIT_THRESHOLD = 0.8
+
 
 @dataclass
 class CacheAwareMetrics:
@@ -57,6 +62,24 @@ class CacheAwareMetrics:
 
     # Expected prefix hash (should be identical across ALL agents)
     expected_prefix_hash: str | None = None
+
+    def reset_baseline(self) -> None:
+        """Reset the cold cache baseline for fresh measurements.
+
+        Call this when:
+        - Starting a new test session
+        - After restarting the vLLM server
+        - When you want to measure fresh cold vs warm performance
+        """
+        old_baseline = self.cold_cache_ttft
+        self.cold_cache_ttft = None
+        self.expected_prefix_hash = None
+        self.ttft_history.clear()
+        logger.info(
+            f"[CACHE] Baseline RESET. Previous baseline was: {old_baseline:.2f}s"
+            if old_baseline
+            else "[CACHE] Baseline RESET (was unset)"
+        )
 
     def log_request_start(self, agent_name: str, prompt: str) -> dict:
         """
@@ -182,20 +205,24 @@ class CacheAwareMetrics:
         if self.cold_cache_ttft is None:
             self.cold_cache_ttft = ttft_seconds
             is_cache_hit = False  # First request is always cold
-            logger.info(f"[CACHE] Cold cache baseline established: {ttft_seconds:.2f}s")
+            logger.info(f"[CACHE] ⏱️ Baseline set: {ttft_seconds:.2f}s (first request)")
             # Set cold cache baseline in Prometheus
             if prometheus_available:
                 set_cold_cache_baseline(ttft_seconds)
         else:
             # Infer cache hit from TTFT ratio
             ttft_ratio = ttft_seconds / self.cold_cache_ttft
-            is_cache_hit = ttft_ratio < 0.5  # <50% of cold time = likely hit
+            is_cache_hit = ttft_ratio < CACHE_HIT_THRESHOLD
 
-            status = "HIT ✅" if is_cache_hit else "MISS ❌"
-            logger.info(
-                f"[CACHE] Agent={agent_name} TTFT={ttft_seconds:.2f}s "
-                f"ratio={ttft_ratio:.2f} -> {status}"
-            )
+            # Use clearer status messages
+            if is_cache_hit:
+                status = f"LIKELY HIT ✅ ({ttft_ratio:.0%} of baseline)"
+            elif ttft_ratio < 1.0:
+                status = f"SLIGHT IMPROVEMENT ({ttft_ratio:.0%} of baseline)"
+            else:
+                status = f"NO IMPROVEMENT ({ttft_ratio:.0%} of baseline)"
+
+            logger.info(f"[CACHE] Agent={agent_name} TTFT={ttft_seconds:.2f}s -> {status}")
 
             # Record cache hit/miss in Prometheus
             if prometheus_available:
@@ -234,9 +261,9 @@ class CacheAwareMetrics:
         hashes = [h for _, _, h in self.ttft_history]
         unique_hashes = set(hashes)
 
-        # Count inferred hits/misses
+        # Count inferred hits/misses using CACHE_HIT_THRESHOLD
         if self.cold_cache_ttft:
-            hits = sum(1 for t in ttfts[1:] if t < self.cold_cache_ttft * 0.5)
+            hits = sum(1 for t in ttfts[1:] if t < self.cold_cache_ttft * CACHE_HIT_THRESHOLD)
             misses = len(ttfts) - 1 - hits  # Exclude first (always cold)
         else:
             hits = 0

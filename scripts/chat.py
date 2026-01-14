@@ -244,64 +244,90 @@ class BankingCLI:
                     return None
 
                 # Parse SSE stream
-                for line in response.iter_lines():
-                    if not line:
-                        continue
+                # Use Live display for rich markdown rendering during streaming
+                live = None
 
-                    # Parse event type
-                    if line.startswith("event:"):
-                        event_type = line[6:].strip()
-                        continue
-
-                    # Parse data
-                    if line.startswith("data:"):
-                        data_str = line[5:].strip()
-                        try:
-                            data = json.loads(data_str)
-                        except json.JSONDecodeError:
+                try:
+                    for line in response.iter_lines():
+                        if not line:
                             continue
 
-                        if event_type == "metadata":
-                            ttft = data.get("ttft", 0)
-                            agents = data.get("agents", [])
+                        # Parse event type
+                        if line.startswith("event:"):
+                            event_type = line[6:].strip()
+                            continue
 
-                            # Clear "waiting" message and show TTFT
-                            if RICH_AVAILABLE:
-                                # Move cursor back and clear line
-                                console.print("\r" + " " * 50, end="\r")
-                                console.print(
-                                    f"[green]⚡ TTFT: {ttft:.3f}s[/green] | Agent: [magenta]{', '.join(agents)}[/magenta]"
-                                )
-                                console.print("\n[bold]Response:[/bold]")
-                            else:
-                                print(f"\r⚡ TTFT: {ttft:.3f}s | Agent: {', '.join(agents)}")
-                                print("\nResponse:")
+                        # Parse data
+                        if line.startswith("data:"):
+                            data_str = line[5:].strip()
+                            try:
+                                data = json.loads(data_str)
+                            except json.JSONDecodeError:
+                                continue
 
-                            # first_token_received = True
+                            if event_type == "metadata":
+                                ttft = data.get("ttft", 0)
+                                agents = data.get("agents", [])
 
-                        elif event_type == "token":
-                            content = data.get("content", "")
-                            full_response += content
-                            # Print token immediately (no newline)
-                            if RICH_AVAILABLE:
-                                console.print(content, end="", markup=False)
-                            else:
-                                print(content, end="", flush=True)
+                                # Clear "waiting" message and show TTFT
+                                if RICH_AVAILABLE:
+                                    # Move cursor back and clear line
+                                    console.print("\r" + " " * 50, end="\r")
+                                    console.print(
+                                        f"[green]⚡ TTFT: {ttft:.3f}s[/green] | Agent: [magenta]{', '.join(agents)}[/magenta]"
+                                    )
+                                    console.print("\n[bold]Response:[/bold]")
 
-                        elif event_type == "done":
-                            total_time = data.get("total_time", 0)
-                            if RICH_AVAILABLE:
-                                console.print(f"\n\n[dim]Total time: {total_time:.2f}s[/dim]")
-                            else:
-                                print(f"\n\nTotal time: {total_time:.2f}s")
+                                    # Start Live display for markdown rendering
+                                    from rich.live import Live
+                                    from rich.markdown import Markdown
 
-                        elif event_type == "error":
-                            error = data.get("error", "Unknown error")
-                            if RICH_AVAILABLE:
-                                console.print(f"\n❌ Error: {error}", style="error")
-                            else:
-                                print(f"\n❌ Error: {error}")
-                            return None
+                                    live = Live(
+                                        Markdown(""), console=console, refresh_per_second=10
+                                    )
+                                    live.start()
+                                else:
+                                    print(f"\r⚡ TTFT: {ttft:.3f}s | Agent: {', '.join(agents)}")
+                                    print("\nResponse:")
+
+                            elif event_type == "token":
+                                content = data.get("content", "")
+                                full_response += content
+                                # Update Live display or print token
+                                if RICH_AVAILABLE and live:
+                                    live.update(Markdown(full_response))
+                                elif RICH_AVAILABLE:
+                                    # Fallback if live failed to start (rare)
+                                    console.print(content, end="", markup=False)
+                                else:
+                                    print(content, end="", flush=True)
+
+                            elif event_type == "done":
+                                if live:
+                                    live.stop()
+                                    live = None
+
+                                total_time = data.get("total_time", 0)
+                                if RICH_AVAILABLE:
+                                    console.print(f"\n\n[dim]Total time: {total_time:.2f}s[/dim]")
+                                else:
+                                    print(f"\n\nTotal time: {total_time:.2f}s")
+
+                            elif event_type == "error":
+                                if live:
+                                    live.stop()
+                                    live = None
+
+                                error = data.get("error", "Unknown error")
+                                if RICH_AVAILABLE:
+                                    console.print(f"\n❌ Error: {error}", style="error")
+                                else:
+                                    print(f"\n❌ Error: {error}")
+                                return None
+                finally:
+                    # Ensure live is stopped if loop exits abnormally
+                    if live:
+                        live.stop()
 
             # Add to history
             self.history.append(

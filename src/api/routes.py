@@ -354,3 +354,24 @@ async def get_cache_stats():
             "recommendation": report.get("recommendation"),
         },
     }
+
+
+@router.post("/cache/reset")
+async def reset_cache_baseline():
+    """
+    Reset the cache metrics baseline.
+
+    Call this endpoint to:
+    - Start fresh measurements after restarting vLLM server
+    - Reset before running TTFT comparison tests
+    - Clear accumulated metrics history
+
+    Example:
+        curl -X POST http://localhost:8000/cache/reset
+    """
+    cache_metrics.reset_baseline()
+
+    return {
+        "status": "ok",
+        "message": "Cache baseline reset. Next request will establish new baseline.",
+    }

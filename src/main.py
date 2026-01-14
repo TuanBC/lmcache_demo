@@ -93,14 +93,29 @@ async def lifespan(app: FastAPI):
 
     logger.info("[STARTUP] Checkpointer initialized (MemorySaver)")
 
-    # 4. Warmup removed to allow accurate Cold vs Warm TTFT testing
-    # The application will now start "cold". The first user request will incur prefill latency.
-    # To re-enable production warmup, uncomment the block below.
-
-    # logger.info(f"[STARTUP] Warming cache with full prefix...")
-    # ... (warmup logic commented out) ...
-
-    # 5. Build the graph with checkpointer
+    # 4. Cache warm-up DISABLED for accurate cold vs warm TTFT benchmarking
+    # Uncomment the block below to enable production warm-up:
+    #
+    # logger.info("[STARTUP] Warming cache with prefix...")
+    # try:
+    #     from langchain_openai import ChatOpenAI
+    #     from src.config.settings import get_settings as get_app_settings
+    #     app_settings = get_app_settings()
+    #     warmup_prompt = prompt_builder.build("router", [], "Warm up cache")
+    #     llm = ChatOpenAI(
+    #         base_url=app_settings.vllm_base_url,
+    #         api_key=app_settings.vllm_api_key,
+    #         model=app_settings.vllm_model,
+    #         temperature=0.7,
+    #         max_tokens=1,
+    #         streaming=True,
+    #     )
+    #     for chunk in llm.stream(warmup_prompt):
+    #         if chunk.content:
+    #             logger.info(f"[STARTUP] Cache warmed successfully")
+    #             break
+    # except Exception as e:
+    #     logger.warning(f"[STARTUP] Cache warm-up failed (non-fatal): {e}")
 
     # 5. Build the graph with checkpointer
     graph = build_graph(checkpointer=checkpointer)
